@@ -1,0 +1,11 @@
+9/18/17 - 10/01/17
+
+Babak:  	- setup database with real host and establish login/registration
+		- research for domain/host
+		- create database and mock(example) data
+
+Rallante:	- research and begin implementation for API(s)  (chatbot/google)
+		- detail project requirements/goals.
+
+Elnaz:		- research mobile applications for similar implementations/projects
+		- establish testing parameters and routines
