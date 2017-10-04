@@ -3,9 +3,9 @@
 	<?php
 /////////////////////////////////////////////////////////////
 // Define server connection parameters
-	$servername = "http://babakarian.com:3306";
+	$servername = "localhost";
 	$username = "babakari_showMe";
-	$password = "Sh@2017";
+	$password = "password";
 	$dbName = "users";
 
 // Create connection
@@ -37,7 +37,7 @@
 	$result = $conn->query($sql);
 	if ($result->num_rows == 1) {
     // login successful
-		echo "Login Successful.";
+
 	} else {
 		echo "0 results";
 	}
