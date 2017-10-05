@@ -36,6 +36,10 @@
             <link rel="stylesheet" type="text/css" href="css/overrides.css" />
             <link rel="stylesheet" href="css/style.css">
             <meta charset="UTF-8">
+            <!-- <?php
+            $msgErrorLogin = "";
+            $msgErrorReg = "";
+            ?> -->
             <title>Login or Register</title>
         </head>
         <body>
@@ -54,10 +58,10 @@
         			<form method="post" action="http://babakarian.com/login.php">
         				<h1>Login Form</h1>
         				<div>
-        					<input type="text" placeholder="Username" required="" id="username" />
+        					<input type="text" placeholder="Username" required="" id="username" name="username" />
         				</div>
         				<div>
-        					<input type="password" placeholder="Password" required="" id="password" />
+        					<input type="password" placeholder="Password" required="" id="password" name="password" />
         				</div>
         				<div>
         					<input type="submit" value="Log in" />
