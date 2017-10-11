@@ -1,7 +1,23 @@
 {
-    "name": "Show-Me",
-    "version": "1.0.0",
-    "private": true,
-    "dependencies": {
+  "name": "Show-Me",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "cordova-android": "^5.2.1",
+    "cordova-browser": "^4.1.0",
+    "cordova-ios": "4.2.0",
+    "cordova-plugin-whitelist": "1.2.2",
+    "cordova-windows": "4.4.2"
+  },
+  "cordova": {
+    "platforms": [
+      "android",
+      "browser",
+      "ios",
+      "windows"
+    ],
+    "plugins": {
+      "cordova-plugin-whitelist": {}
     }
+  }
 }
