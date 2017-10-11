@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <!--
     Licensed to the Apache Software Foundation (ASF) under one
     or more contributor license agreements.  See the NOTICE file
@@ -41,21 +41,25 @@
     $msgErrorReg = "";
     ?> -->
     <title>Login or Register</title>
+    <style>
+        .forgot{color: white;
+    background-color: #f44336;
+    }
+    .register{background-color: #4CAF50;
+    color: white;}
+  
+    </style>
 </head>
 <body>
-    <!--<div class="app">
-        <h1>Apache Cordova</h1>
-        <div id="deviceready" class="blink">
-            <p class="event listening">Connecting to Device</p>
-            <p class="event received">Device is Ready</p>
-        </div>
-    </div>-->
-    <!--<script type="text/javascript" src="cordova.js"></script>-->
-    <!--<script type="text/javascript" src="scripts/index.js"></script>-->
+    
+
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
 
     <div class="container">
         <section id="content">
-            <form method="post" action="http:///babakarian.com/login.php">
+            <form method="post" action="http://babakarian.com/login.php">
                 <h1>Login Form</h1>
                 <div>
                     <input type="text" placeholder="Username" required="" id="username" name="username" />
@@ -65,8 +69,13 @@
                 </div>
                 <div>
                     <input type="submit" value="Log in" />
-                    <a href="#">Lost your password?</a>
-                    <a href="#">Register</a>
+
+                    <div class="clearfix">
+                     <button type="button" class="forgot" ><a  href="/Users/srh/Desktop/forgotpass.html" style="text-decoration: none;">Forgot your password</a></button>
+                    <button type="button" class="register"><a href="/Users/srh/Desktop/register.html" style="text-decoration: none;">Register</a></button>
+                    </div>
+                    
+                    
                 </div>
             </form><!-- form -->
         </section><!-- content -->
