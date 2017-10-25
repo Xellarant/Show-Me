@@ -42,11 +42,14 @@
     ?> -->
     <title>Login or Register</title>
     <style>
-        .forgot{color: white;
-    background-color: #f44336;
+        /*.forgot{color: white;
+    background-color: yellow;
+    padding: 2;
     }
-    .register{background-color: #4CAF50;
-    color: white;}
+    .register{background-color: cyan;
+    color: white;
+    padding: 2;
+    }*/
   
     </style>
 </head>
@@ -68,14 +71,13 @@
                     <input type="password" placeholder="Password" required="" id="password" name="password" />
                 </div>
                 <div>
-                    <input type="submit" value="Log in" />
+                    <input type="submit" value="Log in" style="margin-bottom: 15px;" />
 
-                    <div class="clearfix">
-                     <button type="button" class="forgot" ><a  href="/Users/srh/Desktop/forgotpass.html" style="text-decoration: none;">Forgot your password</a></button>
-                    <button type="button" class="register"><a href="/Users/srh/Desktop/register.html" style="text-decoration: none;">Register</a></button>
+                    <div class="centered">
+                     <a class="forgot" href="forgotpass.html" style="text-decoration: none; margin-bottom: 15px; ">Forgot your password</a>
+                    <a class="register" href="register.html" style="text-decoration: none; margin-bottom: 15px;">Register</a><br />
                     </div>
-                    
-                    
+                                        
                 </div>
             </form><!-- form -->
         </section><!-- content -->

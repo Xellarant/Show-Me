@@ -84,6 +84,10 @@ form:after {
     width: 900px;
 }
 
+.centered {
+    text-align: center;
+}
+
 #content {
     background: #f9f9f9;
     background: -moz-linear-gradient(top, rgba(248,248,248,1) 0%, rgba(249,249,249,1) 100%);
@@ -253,7 +257,7 @@ form:after {
     border: 1px solid #D69E31;
     color: #85592e;
     cursor: pointer;
-    float: left;
+    float: inherit;
     font: bold 15px Helvetica, Arial, sans-serif;
     height: 35px;
     margin: 20px 0 35px 15px;

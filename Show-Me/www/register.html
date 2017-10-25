@@ -1,33 +1,6 @@
 <html>
 <head>
-	<style type="text/css">
-	.cancelbtn{color: white;
-    background-color: #f44336;}
-    .signupbtn{background-color: #4CAF50;
-    color: white;}
-		/*button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 30%;
-}
-  .cancelbtn {
-    padding: 14px 20px;
-    background-color: #f44336;
-}
-
-/* Float cancel and signup buttons and add an equal width */
-/*.cancelbtn,.signupbtn {
-    float: left;
-    width: 10%;
-}
- div input:hover{
- background-color: lightblue;
- } */
-	</style>
+	
 	<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
@@ -41,7 +14,7 @@
     <script type="text/javascript" src="js/index.js"></script>
 <div class="container">
         <section id="content">
-            <form method="post" action="http://babakarian.com/newRegistration.php">
+            <form class="centered" method="post" action="http://babakarian.com/newRegistration.php">
                 <h1>register  Form</h1>
    				<div>
                 <label>Email<br></label>
@@ -65,12 +38,11 @@
                 </div>
 
                 <label>Repeat Password<br></label>
-                    <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
-                    <input type="checkbox" checked="checked"> Remember me
-               <div class="clearfix">
-                 <button type="button" class="cancelbtn">Cancel</button>
-                 <button type="submit" class="signupbtn">Sign Up</button>
-                </div>
+                    <input type="password" placeholder="Repeat Password" name="psw-repeat" required><br />
+                    <input type="checkbox" checked="checked"> Remember me <br />                            
+                    <div style="text-align: center;">
+                        <input type="submit" value="Sign Up"/>
+                    </div>                
             </form><!-- form -->
         </section><!-- content -->
     </div><!-- container -->
