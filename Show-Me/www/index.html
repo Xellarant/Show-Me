@@ -28,59 +28,45 @@
         * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
             * Enable inline JS: add 'unsafe-inline' to default-src
         -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="msapplication-tap-highlight" content="no">
-    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-    <link rel="stylesheet" type="text/css" href="css/index.css">
-    <link rel="stylesheet" type="text/css" href="css/overrides.css" />
-    <link rel="stylesheet" href="css/style.css">
-    <meta charset="UTF-8">
-    <!-- <?php
-    $msgErrorLogin = "";
-    $msgErrorReg = "";
-    ?> -->
-    <title>Login or Register</title>
-    <style>
-        /*.forgot{color: white;
-    background-color: yellow;
-    padding: 2;
-    }
-    .register{background-color: cyan;
-    color: white;
-    padding: 2;
-    }*/
-  
-    </style>
-</head>
-<body>
-    
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet" type="text/css" href="css/overrides.css" />
+        <link rel="stylesheet" href="css/style.css">
+        <meta charset="UTF-8">    
+        <title>Login or Register</title>
+
+    </head>
+    <body>
 
 
-    <script type="text/javascript" src="cordova.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>
 
-    <div class="container">
-        <section id="content">
-            <form method="post" action="http://showme-fav.com/php/login.php">
-                <h1>Login Form</h1>
-                <div>
-                    <input type="text" placeholder="Username" required="" id="username" name="username" />
-                </div>
-                <div>
-                    <input type="password" placeholder="Password" required="" id="password" name="password" />
-                </div>
-                <div>
-                    <input type="submit" value="Log in" style="margin-bottom: 15px;" />
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
 
-                    <div class="centered">
-                     <a class="forgot" href="forgotpass.html" style="text-decoration: none; margin-bottom: 15px; ">Forgot your password</a>
-                    <a class="register" href="register.html" style="text-decoration: none; margin-bottom: 15px;">Register</a><br />
+        <div class="container">
+            <section id="content">
+                <form method="post" action="http://showme-fav.com/php/login.php">
+                    <h1>Login Form</h1>
+                    <div>
+                        <input type="text" placeholder="Username" required="" id="username" name="username" />
                     </div>
-                                        
-                </div>
-            </form><!-- form -->
-        </section><!-- content -->
-    </div><!-- container -->
-</body>
-</html>
+                    <div>
+                        <input type="password" placeholder="Password" required="" id="password" name="password" />
+                    </div>
+                    <div>
+                        <input type="submit" value="Log in" style="margin-bottom: 15px;" />
+
+                        <div class="centered">
+                           <a class="forgot" href="forgotpass.html" style="text-decoration: none; margin-bottom: 15px; ">Forgot your password</a>
+                           <a class="register" href="register.html" style="text-decoration: none; margin-bottom: 15px;">Register</a><br />
+                       </div>
+
+                   </div>
+               </form><!-- form -->
+           </section><!-- content -->
+       </div><!-- container -->
+   </body>
+   </html>
