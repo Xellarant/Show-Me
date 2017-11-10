@@ -1,0 +1,25 @@
+CREATE DATABASE `test` /*!40100 DEFAULT CHARACTER SET latin1 */;
+CREATE TABLE `course_details` (
+  `id` int(1) NOT NULL AUTO_INCREMENT,
+  `title` varchar(25) NOT NULL,
+  `duration` varchar(50) NOT NULL,
+  `price` varchar(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+CREATE TABLE `phonegap_login` (
+  `reg_id` int(1) NOT NULL AUTO_INCREMENT,
+  `reg_date` varchar(20) NOT NULL,
+  `fullname` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  PRIMARY KEY (`reg_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+CREATE TABLE `users` (
+  `userID` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(45) NOT NULL,
+  `password` varchar(150) NOT NULL,
+  `email` varchar(75) DEFAULT NULL,
+  PRIMARY KEY (`userID`),
+  UNIQUE KEY `userID_UNIQUE` (`userID`),
+  UNIQUE KEY `username_UNIQUE` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;

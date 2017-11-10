@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "cordova-android": "^5.2.1",
+    "cordova-android": "^6.3.0",
     "cordova-browser": "^4.1.0",
     "cordova-ios": "^4.2.0",
     "cordova-plugin-whitelist": "1.2.2",
@@ -11,10 +11,10 @@
   },
   "cordova": {
     "platforms": [
-      "android",
       "browser",
       "ios",
-      "windows"
+      "windows",
+      "android"
     ],
     "plugins": {
       "cordova-plugin-whitelist": {}
