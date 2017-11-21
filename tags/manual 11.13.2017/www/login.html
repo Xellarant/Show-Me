@@ -1,0 +1,82 @@
+<html>
+<head>
+	<title>Login</title>
+	<!-- <link rel="stylesheet" type="text/css" href="css/ionic.css"> -->
+	<link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/1.3.3/css/ionic.css">
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript">
+		
+		// function storeSession() {
+		// 	jquery.getJSON("php/session.php", function(session) {
+		// 		// session data loaded
+		// 	});
+		// 	var i;
+		// 	for (i = 0; i < session.length; i++) {
+		// 		console.log(session[i]);
+		// 	}
+		// 	console.log("session data printed.");
+		// }
+
+		$(document).ready(function()
+		{
+			if ($("#loginButton").length != 0)
+				console.log("loginButton found!");
+			else
+				console.log("error: jQuery couldn't find loginButton.");
+			$("#loginButton").click(function(){
+				console.log("attaching login function.");
+				var email=$("#email").val();
+				var password=$("#password").val();
+				var dataString="email="+email+"&password="+password+"&login=";
+				if($.trim(email).length>0 & $.trim(password).length>0)
+				{
+					$.ajax({
+						type: "POST",
+						url: (domainString + "/php/login.php"),
+						data: dataString,
+						crossDomain: true,
+						cache: false,
+						beforeSend: function(){ $("#login").html('Connecting...');},
+						success: function(data){
+							alert(data);
+							if(data=="success")
+							{
+								localStorage.setItem("login", "true");
+								localStorage.setItem("email", "email");
+								window.location.href = "index.html";
+							}
+							else if(data="failed")
+							{
+								alert("Login error");
+								$("#login").html('Login');
+							}
+						}
+					});
+				}
+				return false;
+				//storeSession();
+			});			
+		});
+	</script>
+</head> <!-- Always Enter a Title! -->
+<body>	
+	<br/><br/>
+
+	<div class="list">
+		<input type="hidden" id="id" value=""/>			
+		<div class="item">
+			<label>Email</label>
+			<input type="email" id="email" value=""/>
+		</div>
+		<div class="item">
+			<label>Password</label>
+			<input type="password" id="password" placeholder="password" value=""/>
+		</div>
+		<div class="item">
+			<input type="button" id="loginButton" class="button button-block" value="Login"/>
+		</div>
+
+	</div>
+</body>
+</html>

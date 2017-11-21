@@ -124,13 +124,13 @@ function logCheck() { // also handles anchor checking
           + '<h2><a id="signupNav" class="button button-clear" href="signup.html">Signup</a></h2>'
           + '<h2><a class="button button-clear" href="insert.html">Insert</a></h2>'
           + '<h2><a class="button button-clear" href="readjson.html">Update</a></h2>'
-          + '<h2><a class="button button-clear" href="chatbot.html">Show-Me Bot</a></h2>                     '
+          + '<h2><a class="button button-clear" href="chatbot.html">Show-Me Bot</a></h2>'
           + '<!-- <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; menu</span> -->'
           + '<h1 class="title">Test Index Page</h1>'
           // + '<a id="logout" class="button button-clear" href="#">Logout</a>'
           + '<a id="login" class="button button-clear" href="login.html">Login</a>'
           + '</div>'
-          + '<br/><br/><h2 class="" id="message" style="text-align: center;"></h2>"';
+          + '<br/><br/><h2 class="" id="message" style="text-align: center;"></h2>';
         // Add remainder of navigation links
         $("body").prepend(navHead);
         $("#main").prepend(navTail); // important because "#main" is created when navHead prepended.

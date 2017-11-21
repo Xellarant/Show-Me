@@ -1,0 +1,52 @@
+<html>
+<head>
+	
+	<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="css/overrides.css" />
+    <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <title>register</title>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+<div class="container">
+        <section id="content">
+            <form class="centered" method="post" action="http://babakarian.com/php/newRegistration.php">
+                <h1>register  Form</h1>
+   				<div>
+                <label>Email<br></label>
+                  <input type="text" placeholder="Enter Email" name="email" required>
+              </div>
+                <div>
+                 <label>FirstName<br></label>
+                    <input type="text" placeholder="name" required="" id="firstname" name="firstname" />
+                </div>
+                <div>
+                	<label>LastName<br></label>
+                    <input type="text" placeholder="lastName" required="" id="lastName" name="lastName" />
+                </div>
+                <div>
+                	<label>UserName<br></label>
+                    <input type="text" placeholder="Username" required="" id="username" name="username" />
+                </div>
+                <div>
+                   <label>Password<br></label>
+                    <input type="password" placeholder="Enter Password" name="psw" required>
+                </div>
+
+                <label>Repeat Password<br></label>
+                    <input type="password" placeholder="Repeat Password" name="psw-repeat" required><br />
+                    <input type="checkbox" checked="checked"> Remember me <br />                            
+                    <input type="submit" style="margin-bottom: 5px;" value="Sign Up"/>                    
+                    
+                    <div class="centered">
+                        <a style="margin-bottom: 15px; float: right; text-decoration: none;" href="login.html">Back to Login</a>
+                    </div>
+            </form><!-- form -->
+        </section><!-- content -->
+    </div><!-- container -->
+</body>
+</html>

@@ -1,0 +1,49 @@
+<html>
+<head>
+	
+	<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="css/overrides.css" />
+    <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <title>showMe</title>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+<div class="container">
+        <section id="content">
+            <form class="centered" method="post" action="http://showme-fav.com/php/showdata.php">
+                <h3>Please enter the information</h3>
+   				<div>
+                <label>Year: From : <br></label>
+                  <input type="text" placeholder="Start year" name="yearStart" >
+              </div>
+        		<div>
+                <label>Year: To : <br></label>
+                  <input type="text" placeholder="End year" name="yearEnd" >
+              </div>
+                <div>
+                	<label>Title<br></label>
+                    <input type="text" placeholder="Title"  name="movieTitle" >
+                </div>
+                <div>
+                	<label>Director<br></label>
+                    <input type="text" placeholder="Director"  name="movieDirector" />
+                </div>
+                <div>
+                   <label>Actor<br></label>
+                    <input type="text" placeholder="Actor" name="movieActor" >
+                </div>
+
+                    <input type="submit" style="margin-bottom: 5px;" value="Submit"/>                    
+                    
+                    <div class="centered">
+                        <a style="margin-bottom: 15px; float: right; text-decoration: none;" href="login.html">Back to Login</a>
+                    </div>
+            </form><!-- form -->
+        </section><!-- content -->
+    </div><!-- container -->
+</body>
+</html>

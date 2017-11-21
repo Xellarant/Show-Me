@@ -1,0 +1,100 @@
+{
+  "luis_schema_version": "2.1.0",
+  "versionId": "0.1",
+  "name": "movie",
+  "desc": "",
+  "culture": "en-us",
+  "intents": [
+    {
+      "name": "movie"
+    },
+    {
+      "name": "None"
+    }
+  ],
+  "entities": [],
+  "composites": [],
+  "closedLists": [
+    {
+      "name": "genres",
+      "subLists": [
+        {
+          "canonicalForm": "comedy",
+          "list": [
+            "comedy",
+            "comedic",
+            "comedies"
+          ]
+        },
+        {
+          "canonicalForm": "drama",
+          "list": [
+            "drama"
+          ]
+        },
+        {
+          "canonicalForm": "action",
+          "list": [
+            "actions"
+          ]
+        },
+        {
+          "canonicalForm": "romance",
+          "list": [
+            "romantic",
+            "romantics"
+          ]
+        },
+        {
+          "canonicalForm": "horror",
+          "list": []
+        },
+        {
+          "canonicalForm": "anime",
+          "list": [
+            "animation",
+            "animations"
+          ]
+        },
+        {
+          "canonicalForm": "tragedy",
+          "list": []
+        },
+        {
+          "canonicalForm": "adventure",
+          "list": []
+        },
+        {
+          "canonicalForm": "fantasy",
+          "list": []
+        }
+      ]
+    }
+  ],
+  "bing_entities": [],
+  "actions": [],
+  "model_features": [],
+  "regex_features": [],
+  "utterances": [
+    {
+      "text": "show me comedy movies",
+      "intent": "movie",
+      "entities": []
+    },
+    {
+      "text": "list of comedy movies",
+      "intent": "movie",
+      "entities": []
+    },
+    {
+      "text": "what are horror movies playing",
+      "intent": "movie",
+      "entities": []
+    },
+    {
+      "text": "list of comedy",
+      "intent": "movie",
+      "entities": []
+    }
+  ]
+}

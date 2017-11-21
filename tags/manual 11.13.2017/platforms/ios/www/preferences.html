@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <!--
+    Customize this policy to fit your own app's needs. For more guidance, see:
+        https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+    Some notes:
+        * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+        * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+        * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+            * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="css/overrides.css" />
+    <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+
+    <title>User Preferences</title>
+</head>
+<body>
+    
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+
+    <div class="container">
+        <section id="content">
+            <form method="post" action="http://babakarian.com/php/login.php">
+                <h1>Login Form</h1>
+                <div>
+                    <label>Favorite Franchise: </label>
+                    <input type="text" id="FavFranchise" name="FavFranchise" />
+                </div>
+                <div>
+                    <label>Favorite Actor: </label>
+                    <input type="text" id="FavActor" name="FavActor" />
+                </div>
+                <div>
+                    <label>Favorite Genre: </label>
+                    <select>
+                        <option value="action">Action</option>
+                        <option value="comedy">Comedy</option>
+                        <option value="horror">Horror</option>                      
+                        <option value="sci-fi">Sci-Fi</option>
+                    </select>
+                </div>
+                <div>
+                    <label>City: </label>
+                    <input type="text" placeholder="City" id="City" name="City" />
+                </div>
+                <div>
+                    <label>State: </label>
+                    <input type="text" placeholder="State" id="State" name="State" />
+                </div>
+                <div>
+                    <label>Country: </label>
+                    <input type="text" placeholder="Country" id="Country" name="Country" />
+                </div>
+                <div>
+                    <label>Zip: </label>
+                    <input type="text" placeholder="Zip" id="Zip" name="Zip" />
+                </div>
+
+                <div>
+                    <input type="submit" value="Save" style="margin-bottom: 15px;" />
+
+                    <div class="centered">
+                     <a class="forgot" href="forgotpass.html" style="text-decoration: none; margin-bottom: 15px; ">Forgot your password</a>
+                    <a class="register" href="register.html" style="text-decoration: none; margin-bottom: 15px;">Register</a><br />
+                    </div>
+                                        
+                </div>
+            </form><!-- form -->
+        </section><!-- content -->
+    </div><!-- container -->
+</body>
+</html>
