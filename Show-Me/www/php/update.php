@@ -4,9 +4,9 @@
  {
  $id=$_POST['id'];
  $title=$_POST['title'];
- $duration=$_POST['duration'];
- $price=$_POST['price'];
- $q=mysqli_query($con,"UPDATE `course_details` SET `title`='$title',`duration`='$duration',`price`='$price' where `id`='$id'");
+ $genre=$_POST['genre'];
+ $subgenre=$_POST['subgenre'];
+ $q=mysqli_query($con,"UPDATE `user_favorites` SET `title`='$title',`genre`='$genre',`subgenre`='$subgenre' where `id`='$id'");
  if($q)
  echo "success";
  else

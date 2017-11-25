@@ -1,49 +1,110 @@
+<!DOCTYPE html>
+
 <html>
-<head>
-	
-	<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="msapplication-tap-highlight" content="no">
-    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-    <link rel="stylesheet" type="text/css" href="css/index.css">
-    <link rel="stylesheet" type="text/css" href="css/overrides.css" />
-    <link rel="stylesheet" href="css/style.css">
-    <meta charset="UTF-8">
-    <title>showMe</title>
-    <script type="text/javascript" src="cordova.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>
-<div class="container">
+<head> <!-- Always Enter a Title! -->
+        <title>Add a Favorite Movie</title>
+
+        <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"> -->
+        
+        <script type="text/javascript" src="js/jquery.js"></script>
+        <!-- <script type="text/javascript" src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.js"></script> -->
+        <script type="text/javascript" src="js/index.js"></script>
+        <link rel="stylesheet" href="css/style.css">
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $("#submit").click(function() {
+                console.log("form submission detected.");
+                var yearStart=$("#yearStart").val();
+                var yearEnd=$("#yearEnd").val();
+                var movieTitle=$("#movieTitle").val();
+                var movieDirector=$("#movieDirector").val();
+                var movieActor=$("#movieActor").val();
+                var dataString="yearStart="+yearStart+"&yearEnd="+yearEnd+"&movieTitle="+movieTitle+"&movieDirector="+movieDirector+"&movieActor="+movieActor;
+                if($.trim(movieTitle).length>0)
+                {
+                    alert("attempting to do the clicky thing.");
+                    $.ajax({
+                        type: "GET",
+                        url: (domainString + "/php/moviejson.php"),
+                        data: dataString,
+                        crossDomain: true,
+                        cache: false,
+                        beforeSend: function(){ $("#submit").html('Connecting...');},
+                        success: function(data){
+                            console.log("dataString: " + dataString);
+                            console.log("data: " + data);
+                            var result = JSON.parse(data);
+
+                            $.each(result, function(i, field){
+                                var record = new Object();
+                                record.id=field.id;
+                                record.title=field.title;
+                                record.year=field.year;
+                                record.image_url=field.image_url;
+                                record.rating=field.rating;
+                                record.runtime=field.runtime;
+                                record.imdb_rating=field.imdb_rating;
+                                record.description=field.description;
+                                record.genre=field.genre;
+                                record.actors=field.actors;
+                                
+                                $("#listview").append("<a class='item' href='addMovie.html?id="+record.id+"'><span>Year: "+record.year+"</span><h2>"+ record.title + " </h2><img src='"+ record.image_url +"'>");
+                                // tableResults.push(record);
+                                // console.log(record + "pushed.");                    
+                                }); // end $.each                            
+                        } // end success
+                    }); // end $.ajax
+                    $("#submit").html('Submit');
+                    $("#searchForm").toggle();
+                }
+                return false;
+                //storeSession();
+                }); // end submit onclick()
+            }); //end $(document).ready()
+        </script>
+    </head>
+    <body>                
+        <center>
+        <div class="container">
         <section id="content">
-            <form class="centered" method="post" action="http://showme-fav.com/php/showdata.php">
+            <form id="searchForm" class="list" method="GET" action="http://showme-fav.com/php/showdata.php">
                 <h3>Please enter the information</h3>
-   				<div>
+                <div class="item" style="float: inherit;">
                 <label>Year: From : <br></label>
-                  <input type="text" placeholder="Start year" name="yearStart" >
+                  <input id="yearStart" type="date" class="form-control" placeholder="Start year" name="yearStart" style="float: inherit;" >
               </div>
-        		<div>
+                <div class="item">
                 <label>Year: To : <br></label>
-                  <input type="text" placeholder="End year" name="yearEnd" >
+                  <input id="yearEnd" type="date" class="form-control" placeholder="End year" name="yearEnd" >
               </div>
-                <div>
-                	<label>Title<br></label>
-                    <input type="text" placeholder="Title"  name="movieTitle" >
+                <div class="item">
+                    <label>Title<br></label>
+                    <input id="movieTitle" type="text" class="form-control" placeholder="Title"  name="movieTitle" required >
                 </div>
-                <div>
-                	<label>Director<br></label>
-                    <input type="text" placeholder="Director"  name="movieDirector" />
+                <div class="item">
+                    <label>Director<br></label>
+                    <input id="movieDirector" type="text" class="form-control" placeholder="Director"  name="movieDirector" />
                 </div>
-                <div>
+                <div class="item">
                    <label>Actor<br></label>
-                    <input type="text" placeholder="Actor" name="movieActor" >
+                    <input id="movieActor" type="text" class="form-control" placeholder="Actor" name="movieActor" >
                 </div>
 
-                    <input type="submit" style="margin-bottom: 5px;" value="Submit"/>                    
-                    
-                    <div class="centered">
-                        <a style="margin-bottom: 15px; float: right; text-decoration: none;" href="login.html">Back to Login</a>
+                    <input id="submit" type="button" class="button-style" style="margin-bottom: 15px;" value="Submit"/>                                        
+                    <div class="centered" style="margin-bottom: 10px;">
+                        <a style="float: inherit; text-decoration: none;" href="favorites.html">Back to Favorites</a>
                     </div>
-            </form><!-- form -->
+            </form><!-- form -->            
         </section><!-- content -->
+        <br/><br/>
+        <p id="test"></p>
+        <ul class="list" id="listview"></ul>
     </div><!-- container -->
+    </center>
+
 </body>
 </html>

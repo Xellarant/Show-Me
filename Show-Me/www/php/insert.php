@@ -3,9 +3,9 @@ include "db.php";
 if(isset($_POST['insert']))
 {
 	$title=$_POST['title'];
-	$duration=$_POST['duration'];
-	$price=$_POST['price'];
-	$q=mysqli_query($con,"INSERT INTO `course_details` (`title`,`duration`,`price`) VALUES ('$title','$duration','$price')");
+	$genre=$_POST['genre'];
+	$subgenre=$_POST['subgenre'];
+	$q=mysqli_query($con,"INSERT INTO `user_favorites` (`title`,`genre`,`subgenre`) VALUES ('$title','$genre','$subgenre')");
 	if($q)
 		echo "success";
 	else

@@ -17,6 +17,8 @@
  * under the License.
  */
  var session;
+ // domainString must be changed for app deployment!
+ var domainString = "http://" + window.location.hostname;
  var app = {
     // Application Constructor
     initialize: function() {
@@ -89,28 +91,36 @@ function logCheck() { // also handles anchor checking
                     localStorage.setItem("login", "false");
                     window.location.href = "index.html";
                 });
-            } // end logCheck
+    } // end logCheck
 
-            /* Set the width of the side navigation to 250px */
-            function openNav() {
-                document.getElementById("mySidenav").style.width = "250px";
-            }
+    /* Set the width of the side navigation to 250px */
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+    }
 
-            /* Set the width of the side navigation to 0 */
-            function closeNav() {
-                document.getElementById("mySidenav").style.width = "0";
-            }
+    /* Set the width of the side navigation to 0 */
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+    }            
 
-            var domainString = "http://sandbox.xellarant.com";
+    app.initialize();
 
-            app.initialize();
+    function headerFiles() {
+        var ionicStuff = ''
+        + '<script type="text/javascript" src="js/angular.js"></script>'
+        + '<script type="text/javascript" src="js/geturi.js"></script>'
+        + '<script type="text/javascript" src="js/ionic.js"></script>'
+        + '<script type="text/javascript" src="js/ionic-angular.js"></script>'
 
-            $(document).ready(function()
-            {    
-                mainNav();    
+        + '<link rel="stylesheet" type="text/css" href="css/ionic.css">'
+        //+ '<link rel="stylesheet" type="text/css" href="css/index.css">'
+        + '<link rel="stylesheet" type="text/css" href="css/overrides.css">'
+        + '<link rel="stylesheet" type="text/css" href="css/style.css">';
 
+        $("head").append(ionicStuff);
+    }
 
-                function mainNav() {
+    function mainNav() {
           // contains the code for the navigation menu(s)
           var navHead = ''
           + '<!-- Use any element to open the sidenav -->'
@@ -122,8 +132,7 @@ function logCheck() { // also handles anchor checking
           + '<div class="bar bar-header bar-positive" style="margin-bottom:80px;">'
           + '<h2><a id="homeNav" class="button button-clear" href="index.html">Home</a></h2>'
           + '<h2><a id="signupNav" class="button button-clear" href="signup.html">Signup</a></h2>'
-          + '<h2><a class="button button-clear" href="insert.html">Insert</a></h2>'
-          + '<h2><a class="button button-clear" href="readjson.html">Update</a></h2>'
+          + '<h2><a class="button button-clear" href="favorites.html">Favorites</a></h2>'          
           + '<h2><a class="button button-clear" href="chatbot.html">Show-Me Bot</a></h2>'
           + '<!-- <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; menu</span> -->'
           + '<h1 class="title">Test Index Page</h1>'
@@ -136,24 +145,52 @@ function logCheck() { // also handles anchor checking
         $("#main").prepend(navTail); // important because "#main" is created when navHead prepended.
     }
 
-    // Update document title dynamically and configure/change login messages/
-    $(".title").text(document.title);
-    if (localStorage.login && localStorage.getItem("login") == "true")
-    {
-        document.getElementById("message").innerHTML="<h1>Welcome Back!</h1>";
-        //$("#login").remove();
-        $("#signupNav").remove();
-    }
-    else
-    {
-        document.getElementById("message").innerHTML="<h1>Please Login (or Sign Up)</h1>";
-        //$("#logout").remove();
-    }
-    $("#logout").click(function(){
-        localStorage.setItem("login", "false");
-        window.location.href = "index.html";
-    });
+    $(document).ready(function()
+    {    
+        mainNav();
+        headerFiles();
 
-        logCheck(); // defined outside of document.ready        
+        // Update document title dynamically and configure/change login messages/
+        $(".title").text(document.title);
+        if (localStorage.login && localStorage.getItem("login") == "true")
+        {
+            document.getElementById("message").innerHTML="<h1>Welcome Back!</h1>";
+            //$("#login").remove();
+            $("#signupNav").remove();
+        }
+        else
+        {
+            document.getElementById("message").innerHTML="<h1>Please Login (or Sign Up)</h1>";
+            //$("#logout").remove();
+        }
+        $("#logout").click(function(){
+            localStorage.setItem("login", "false");
+            window.location.href = "index.html";
+        });
 
-}); // closes document.ready
+            logCheck(); // defined outside of document.ready        
+
+    }); // closes document.ready
+
+function setCookie(cName, cValue) { // currently set to one day expiry
+    var days = new Date();
+    days.setTime(days.getTime() + (1 * 24*60*60*1000));
+    var expires = "expires=" + days.toUTCString();
+    document.cookie = cname+"="+cValue+";"+expires+";path=/";
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}

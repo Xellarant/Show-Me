@@ -6,24 +6,9 @@
 	<script type="text/javascript" src="js/jquery.js"></script>
 	<script type="text/javascript" src="js/index.js"></script>
 	<script type="text/javascript">
-		
-		// function storeSession() {
-		// 	jquery.getJSON("php/session.php", function(session) {
-		// 		// session data loaded
-		// 	});
-		// 	var i;
-		// 	for (i = 0; i < session.length; i++) {
-		// 		console.log(session[i]);
-		// 	}
-		// 	console.log("session data printed.");
-		// }
 
 		$(document).ready(function()
 		{
-			if ($("#loginButton").length != 0)
-				console.log("loginButton found!");
-			else
-				console.log("error: jQuery couldn't find loginButton.");
 			$("#loginButton").click(function(){
 				console.log("attaching login function.");
 				var email=$("#email").val();

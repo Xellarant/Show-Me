@@ -9,18 +9,18 @@
 		$(document).ready(function(){
 			var id = decodeURI(getUrlVars()["id"]);
 			var title = decodeURI(getUrlVars()["title"]);
-			var duration = decodeURI(getUrlVars()["duration"]);
-			var price = decodeURI(getUrlVars()["price"]);
+			var genre = decodeURI(getUrlVars()["genre"]);
+			var subgenre = decodeURI(getUrlVars()["subgenre"]);
 			$("#id").val(id);
 			$("#title").val(title);
-			$("#duration").val(duration);
-			$("#price").val(price);
+			$("#genre").val(genre);
+			$("#subgenre").val(subgenre);
 			$("#update").click(function(){
 				var id=$("#id").val();
 				var title=$("#title").val();
-				var duration=$("#duration").val();
-				var price=$("#price").val();
-				var dataString="id="+id+"&title="+title+"&duration="+duration+"&price="+price+"&update=";
+				var genre=$("#genre").val();
+				var subgenre=$("#subgenre").val();
+				var dataString="id="+id+"&title="+title+"&genre="+genre+"&subgenre="+subgenre+"&update=";
 				$.ajax({
 					type: "POST",
 					url:(domainString + "/php/update.php"),
@@ -83,11 +83,11 @@
 		</div>
 		<div class="item">
 			<label>Duration</label>
-			<input type="text" id="duration" value=""/>
+			<input type="text" id="genre" value=""/>
 		</div>
 		<div class="item">
-			<label>Price</label>
-			<input type="text" id="price" value=""/>
+			<label>SubGenre</label>
+			<input type="text" id="subgenre" value=""/>
 		</div>
 		<div class="item">
 			<input type="button" id="update" class="button button-block" value="Update"/>

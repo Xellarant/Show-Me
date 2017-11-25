@@ -17,24 +17,23 @@
 					record.title=field.title;
 					record.duration=field.duration;
 					record.price=field.price;
-					$("#listview").append("<a class='item' href='form.html?id="+record.id+"&title="+record.title+"&duration="+record.duration+"&price="+record.price+"'><span class='item-note'>$"+record.price+"</span><h2>"+ record.title + " </h2><p>"+ record.duration +"</p></a>");
+					$("#listview").append("<a class='item' href='form.html?id="+record.id+"&title="+record.title+"&genre="+record.genre+"&subgenre="+record.subgenre+"'><span class='item-note'>Sub: "+record.subgenre+"</span><h2>"+ record.title + " </h2><p>"+ record.genre +"</p></a>");
 					tableResults.push(record);
 					console.log(record + "pushed.");					
-				});
-				reportResults();
-			});
-			function reportResults()
-			{
-				console.log("test");
-				console.log("Array Size: " + tableResults.length);
-				console.log("Last record's title: " + tableResults.pop().title);
-			}
+				}); // end $.each
+				
+			}); // end getJSON
+			// function reportResults()
+			// {
+			// 	console.log("test");
+			// 	console.log("Array Size: " + tableResults.length);
+			// 	console.log("Last record's title: " + tableResults.pop().title);
+			// }
 		});
 	</script>
 </head>
 <body>
 	<br/><br/>
-	<ul class="list" id="listview"></ul>
-	<p id="lastID"></p>
+	<ul class="list" id="listview"></ul>	
 </body>
 </html>
