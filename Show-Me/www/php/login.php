@@ -2,13 +2,24 @@
 include "db.php";
 if(isset($_POST['login']))
 {
-	$email = $_POST['email'];
-	$email = filter_var($email, FILTER_SANITIZE_STRING);
+	session_start();
+	$username = $_POST['username'];
+	//$username = filter_var($username, FILTER_SANITIZE_STRING);
 	$password = $_POST['password'];
-	$password = filter_var($password, FILTER_SANITIZE_STRING);
-	$login=mysqli_num_rows(mysqli_query($con, "SELECT * from `phonegap_login` where `email`='$email' and `password`='$password'"));
+	//$password = hash('sha512', $password);
+	$stmt = $con->prepare("SELECT userid, username from `users` where `username`='$username' and `password`='$password'");
+	$stmt->execute();
+	$stmt->store_result();
+	$stmt->bind_result($userID, $username);
+	$stmt->fetch();
+
+	$login=$stmt->num_rows;
+	//echo "login: ".$login;
 	if($login!=0)
 	{
+		$_SESSION['username'] = $username;		
+		$_SESSION['userID'] = $userID;
+
 		echo "success";
 	}
 	else
@@ -16,5 +27,6 @@ if(isset($_POST['login']))
 		echo "failed";
 	}
 	echo mysqli_error($con);
+	$stmt->close();
 }
 ?>

@@ -24,9 +24,11 @@
                 var movieDirector=$("#movieDirector").val();
                 var movieActor=$("#movieActor").val();
                 var dataString="yearStart="+yearStart+"&yearEnd="+yearEnd+"&movieTitle="+movieTitle+"&movieDirector="+movieDirector+"&movieActor="+movieActor;
-                if($.trim(movieTitle).length>0)
+                if($.trim(movieTitle).length>0 
+                    || $.trim(movieDirector.length>0) 
+                    || $.trim(movieActor).length>0)
                 {
-                    alert("attempting to do the clicky thing.");
+                    alert("Searching for matches.");
                     $.ajax({
                         type: "GET",
                         url: (domainString + "/php/moviejson.php"),
@@ -52,25 +54,28 @@
                                 record.genre=field.genre;
                                 record.actors=field.actors;
                                 
-                                $("#listview").append("<a class='item' href='addMovie.html?id="+record.id+"'><span>Year: "+record.year+"</span><h2>"+ record.title + " </h2><img src='"+ record.image_url +"'>");
+                                $("#listview").append("<a class='item' href='addMovie.html?id="+record.id+"'><span>Title: "+record.title+"</span><h2>Year: "+ record.year + " </h2><h2>Genre: "+record.genre+"</h2><img src='"+ record.image_url +"'/><br/><h2>"+record.description+"</h2>");
                                 // tableResults.push(record);
                                 // console.log(record + "pushed.");                    
                                 }); // end $.each                            
                         } // end success
                     }); // end $.ajax
                     $("#submit").html('Submit');
-                    $("#searchForm").toggle();
+                    toggleSearch();                   
                 }
                 return false;
                 //storeSession();
                 }); // end submit onclick()
             }); //end $(document).ready()
+            function toggleSearch() {
+                $("#searchForm").toggle();
+            }
         </script>
     </head>
     <body>                
         <center>
-        <div class="container">
-        <section id="content">
+        <div class="container" style="width: 90%;">
+        <section id="content" style="width: 90%;">
             <form id="searchForm" class="list" method="GET" action="http://showme-fav.com/php/showdata.php">
                 <h3>Please enter the information</h3>
                 <div class="item" style="float: inherit;">
@@ -94,7 +99,7 @@
                     <input id="movieActor" type="text" class="form-control" placeholder="Actor" name="movieActor" >
                 </div>
 
-                    <input id="submit" type="button" class="button-style" style="margin-bottom: 15px;" value="Submit"/>                                        
+                    <input id="submit" type="submit" class="button-style" style="margin-bottom: 15px;" value="Submit"/>                                        
                     <div class="centered" style="margin-bottom: 10px;">
                         <a style="float: inherit; text-decoration: none;" href="favorites.html">Back to Favorites</a>
                     </div>
@@ -102,6 +107,9 @@
         </section><!-- content -->
         <br/><br/>
         <p id="test"></p>
+        <br/>
+        <button onclick="toggleSearch()">Show/Hide Search</button><br/>
+        <br/>
         <ul class="list" id="listview"></ul>
     </div><!-- container -->
     </center>

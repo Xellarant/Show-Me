@@ -1,0 +1,316 @@
+/**
+ *
+ * FANDANGO TEMPLATE - by jsouth@mashery.com (2012)
+ *
+ * Use this as a template for your custom theme. Only the backgrounds are defined to help you see where each element
+ * goes. Set this as your custom theme and then view your Mashery site. Then start customizing to implement your own
+ * theme!
+ *
+ * Check out http://support.mashery.com/public/Mashery/styles/masherycssfw.src.css to see the base structural defaults.
+ * You can find documentation on customizing your portal at http://support.mashery.com/docs/Customizing_Your_Portal
+ * We discourage making major changes to the layout since it has a standard structure to it which is easy for users
+ * to use.
+ *
+ */
+body {
+  background: white url("/public/Mashery/images/clients/fandango/bg.jpg") repeat-x scroll 0 0;
+}
+
+h2 {
+  color: #0066cc;
+}
+
+a:link, a:visited {
+  color: #0066cc;
+}
+a:hover, a:active {
+  color: #ff6600;
+}
+
+/* All the input fields (text input, textareas, selects) */
+input[type^=submit] {
+  background: none repeat scroll 0 0 #FF6600;
+  color: #FFF;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  border-radius: 5px;
+  border: 0;
+}
+
+table thead th {
+  border-bottom: 1px solid #999;
+}
+table td {
+  border-bottom: 1px solid #ddd;
+}
+
+/* Set the overall width */
+div#page,
+div#header,
+div#content,
+div#local,
+div#user,
+div#user-menu,
+div#footer {
+  width: 960px;
+}
+
+/* For pages without navigation (you can set which pages you do not want to have navigation on, for whatever reason) */
+/* For pages without a side column, you can set which pages do or do not have side columns. */
+div#page.no_sub div#main {
+  width: 845px;
+}
+
+#page-logout div#sub {
+  display: none;
+}
+
+/**
+ *
+ * HEADER
+ *
+ * The header is where your logo, login links, search, and user control links should go.
+ *
+ */
+div#header {
+  background: transparent;
+}
+
+div#search {
+  right: 125px;
+  top: 33px;
+}
+
+        /* Here is where you put your logo! Yes, it is the background of a div. This div is special because Javascript makes it behave
+           like a Home link by default, you can change this in the settings if you absolutely must.
+
+           You must change the width and height of this div to the same size as your logo. */
+div#branding-logo {
+/*	
+  background: transparent url("/public/Mashery/images/clients/fandango/logo.png") repeat-x scroll 0 0; */
+  background: transparent url("/files/logo_new.png") repeat-x scroll 0 0;
+  margin: 13px 0 0 20px;
+  width: 264px;
+  height: 62px;
+}
+
+div#branding-mashery {
+  top: 22px;
+}
+
+/* END HEADER */
+/**
+ *
+ * USER
+ *
+ * User information and actions
+ *
+ */
+div#user {
+  /* position: relative; This causes issues in IE6 */
+}
+
+/**
+ *
+ * USER NAV
+ *
+ * Login, logout, register, and My Account links.
+ *
+ */
+div#user-nav {
+  margin: 14px -5px -33px;
+  /* Use top margin to move this around when you can. */
+}
+div#user-nav ul li {
+  color: #999;
+  /* The user's name, "Signed in as Wally Wombat" */
+}
+div#user-nav ul li span.name {
+  color: #ff6600;
+  font-weight: bold;
+}
+div#user-nav ul a {
+  border-right: 1px solid #ccc;
+  padding-right: 15px;
+}
+
+div#user-nav li.sign-out a, div#user-nav li.register a {
+  border: 0;
+}
+
+/* END USER NAV */
+/* END USER */
+/**
+ *
+ * LOCAL NAV
+ *
+ * This is the main navigation bar. You can customize your links in the Settings page.
+ *
+ * The div#local appears AFTER the content for accessbility reasons. Please see
+ * http: //www.contentwithstyle.co.uk/Articles/17/ for details.
+ *
+ * Because the navigation is placed below the content, you will most likely need
+ * to use absolute positioning. Please make sure you understand positioning before
+ * trying to customize it!
+ *
+ */
+div#local {
+  top: 6px;
+  width: 590px;
+}
+div#local li a {
+  color: #686666;
+  font-weight: normal;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  border-radius: 5px;
+  padding: 2px 15px;
+  font-size: 14px;
+}
+div#local li a:hover {
+  background: #ff6600;
+  color: #fff;
+}
+div#local li.active a {
+  background: #ff6600;
+  color: #fff;
+}
+
+/* END LOCAL NAV */
+/**
+ *
+ * USER MENU
+ *
+ * The User Menu contains actions for the user: Start New Entry, New Post, etc.
+ *
+ */
+/**
+ *
+ * SUB LOCAL NAVIGATION
+ *
+ * Links under each primary navigation section.
+ *
+ */
+div#user-menu {
+  display: none;
+}
+
+/* END SUBLOCAL NAV */
+/* END USER MENU */
+/**
+ *
+ * CONTENT
+ *
+ * Where the magic happens (Content of page)
+ *
+ */
+/**
+ *
+ * MAIN
+ *
+ * This is where almost all the content for every page is.
+ *
+ */
+div#main {
+  margin: 45px 0 0 0;
+}
+
+/**
+ *
+ * BLOG, WIKI, FORUM, and DOCS
+ *
+ * Styling for the sections, meta info, file tables, and other parts of these apps.
+ *
+ * Remember, there are usually different states of each app type! For example, when browsing the forum the body will have
+ * an id of #page-forum and a class of .browse. If you click on a forum post to view it, the body will still have the same
+ * id, but the class will change to .read. This way you can control the different views of each app.
+ *
+ */
+/* Comments in all sections except the forum. */
+/**
+ *
+ * FORUM
+ *
+ * The forum is very different than the blog, wiki, docs, etc. Be sure to check out the markup, the default styling
+ * should be ok for most people, but you may need to override some of your list (ul, ol) rules that you set in this
+ * stylesheet.
+ *
+ */
+/* The "Start new topic" button */
+body.page-forum a.create-new {
+  /* Subject of a thread */
+  /* The "original post" in each thread looks different by default */
+}
+
+.page-forum ol.topics ul, .page-forum ol.categories ul {
+  padding: 15px 6px;
+}
+
+/* END FORUM */
+/* END BLOG, WIKI, FORUM, and DOCS */
+/* END MAIN */
+/**
+ *
+ * SUB
+ *
+ * The sub div is usually the small sidebar on the blog/wiki/forum, although some may prefer to hide it altogether.
+ *
+ * In the Dashboard, the sub is also where the form lives to add new content in the Content page.
+ *
+ */
+div#sub {
+  width: 180px;
+  background: #f5f4f4;
+  padding-top: 5px;
+}
+
+div#sub h2 {
+  color: #000;
+}
+
+/* END SUB */
+/* END CONTENT */
+/**
+ *
+ * FOOTER
+ *
+ * Contains your site-info as well as your footer links.
+ *
+ */
+div#footer {
+  border-top: 1px solid #b7b7b7;
+  padding-top: 15px;
+}
+
+/**
+ *
+ * SITEINFO
+ *
+ * The siteinfo you can edit from the Settings page in the Dashboard.
+ * Usually this contains copyright stuff and credits.
+ *
+ */
+div#siteinfo p {
+  font-size: 10px;
+}
+
+#process-register {
+  background: #ff6600;
+  color: #fff;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  border-radius: 5px;
+}
+
+/* END SITEINFO */
+/* END FOOTER */
+/* END THEME TEMPLATE */

@@ -1,52 +1,121 @@
 ﻿<html>
 <head>
 	
-	<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+	<!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
-    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-    <link rel="stylesheet" type="text/css" href="css/index.css">
-    <link rel="stylesheet" type="text/css" href="css/overrides.css" />
-    <link rel="stylesheet" href="css/style.css">
-    <meta charset="UTF-8">
-    <title>register</title>
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"> 
+    <meta charset="UTF-8"> -->
+    <title>Show-Me Registration</title>
     <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
-<div class="container">
-        <section id="content">
+
+    <script type="text/javascript">
+        function sleep(ms) {
+          return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        $(document).ready(function()
+        {   
+            $(".title").text(document.title);
+            $("#signup").click(function() {
+                console.log("attempting signup function.");
+                var email=$("#email").val();
+                var firstname=$("#firstname").val();
+                var lastname=$("#lastname").val();
+                var username=$("#username").val();
+                var password=$("#password").val();
+                var dataString="email="+email+"&firstname="+firstname+"&lastname="+lastname+"&username="+username+"&password="+password;
+                // document.getElementById("testText").innerHTML = "fullname: " +fullname+ "<br/>email: " +email+ "<br/>password: " +password+"<br/>dataString: " +dataString;
+                if($.trim(email).length>0 & $.trim(username).length>0 & $.trim(password).length>0)
+                {
+                    alert("attempting ajax request.");
+                    $.ajax({
+                        type: "POST",
+                        url: (domainString + "/php/newRegistration.php"),
+                        data: dataString,
+                        crossDomain: true,
+                        cache: false,
+                        beforeSend: function(){ $("#signup").val('Connecting...');},
+                        success: function(data){
+                            alert(data);
+                            console.log(data);
+                            //var response = JSON.parse(data);                            
+                            if(data.toString().includes("suc"))
+                            {
+                                var session = getSession();
+                                sleep(5);
+                                alert("Thank you for Registering with us.");
+                                // sleep(5);                                
+                                localStorage.setItem("login", "true");
+                                if (session != null) {
+                                    localStorage.setItem("session.username", session.username);
+                                    localStorage.setItem("session", session);
+                                }
+                                window.location.replace(domainString + "/profile.html");
+                            }
+                            else if (data.includes("duplicate") 
+                                || (data["msg"] != null && data["msg"].includes("duplicate"))) {
+                                alert("We already have that username registered!");
+                            }
+                            else
+                            {
+                                alert("Something went wrong during registration. Do you have an account with us already?");
+                            }
+                            session = getSession();
+                            if (session == null)
+                                session = localStorage.getItem("session");
+                            if(session != null)
+                                alert("Your userID is: " + session.userID);
+                            else
+                                alert("session is null!");
+                            return false;
+                        } // end success
+                    }); // end $.ajax
+                } // end if (form check)
+                $("#signup").val('Sign Up');
+
+            }); // end click function
+        }); // end onready
+    </script>
+
+</head>
+
+<body>
+        <section id="content" style="width: 90%;">
             <form class="centered" method="post" action="http://showme-fav.com/php/newRegistration.php">
-                <h1>register  Form</h1>
+                <h1>Registration Form</h1>
    				<div>
                 <label>Email<br></label>
-                  <input type="text" placeholder="Enter Email" name="email" required>
+                  <input type="email" placeholder="Email" name="email" id="email" required>
               </div>
                 <div>
-                 <label>FirstName<br></label>
-                    <input type="text" placeholder="name" required="" id="firstname" name="firstname" />
+                 <label>First Name<br></label>
+                    <input type="text" placeholder="First Name" required id="firstname" name="firstname" />
                 </div>
                 <div>
-                	<label>LastName<br></label>
-                    <input type="text" placeholder="lastName" required="" id="lastName" name="lastName" />
+                	<label>Last Name<br></label>
+                    <input type="text" placeholder="Last Name" required id="lastname" name="lastname" />
                 </div>
                 <div>
-                	<label>UserName<br></label>
-                    <input type="text" placeholder="Username" required="" id="username" name="username" />
+                	<label>Username<br></label>
+                    <input type="text" placeholder="Username" required id="username" name="username" />
                 </div>
                 <div>
                    <label>Password<br></label>
-                    <input type="password" placeholder="Enter Password" name="psw" required>
-                </div>
+                    <input type="password" placeholder="Password" name="psw" id="password" required>
+                </div><br>
 
-                <label>Repeat Password<br></label>
+                <!-- <label>Repeat Password<br></label>
                     <input type="password" placeholder="Repeat Password" name="psw-repeat" required><br />
-                    <input type="checkbox" checked="checked"> Remember me <br />                            
-                    <input type="submit" style="margin-bottom: 5px;" value="Sign Up"/>                    
-                    
-                    <div class="centered">
-                        <a style="margin-bottom: 15px; float: right; text-decoration: none;" href="login.html">Back to Login</a>
-                    </div>
+                    <input type="checkbox" checked="checked"> Remember me <br />                             -->
+                <input type="button" id="signup" class="button-style" value="Sign Up"/>                    
+                
+                <div class="centered">
+                    <a style="margin-bottom: 15px; margin-right: 45px; float: right; text-decoration: none;" href="login.html">Back to Login</a>
+                </div>
             </form><!-- form -->
         </section><!-- content -->
-    </div><!-- container -->
+
 </body>
 </html>

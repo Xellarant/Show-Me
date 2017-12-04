@@ -41,7 +41,14 @@ else {
     $movieActor = null;
 }
 
-$q=mysqli_query($con,"CALL mdGetFullStats('$yearStart','$yearEnd','$movieTitle','$movieDirector','$movieActor');");
+if (isset($_GET["movieGenre"])) {
+    $movieGenre = $_GET["movieGenre"];
+}
+else {
+    $movieGenre = null;
+}
+
+$q=mysqli_query($con,"CALL mdGetFullStats('$yearStart','$yearEnd','$movieTitle','$movieDirector','$movieActor', '$movieGenre');");
 if ($q) {
     while ($row=mysqli_fetch_object($q)){
         $data[]=$row;

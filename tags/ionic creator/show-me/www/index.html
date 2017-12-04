@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <title></title>
+
+
+
+  <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+  <!-- cordova script (this will be a 404 during development) -->
+  <script src="cordova.js"></script>
+
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+  -->
+
+  <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+
+  <style type="text/css">
+  .platform-ios .manual-ios-statusbar-padding{
+    padding-top:20px;
+  }
+  .manual-remove-top-padding{
+    padding-top:0px; 
+  }
+  .manual-remove-top-padding .scroll{
+    padding-top:0px !important;
+  }
+  ion-list.manual-list-fullwidth div.list, .list.card.manual-card-fullwidth {
+    margin-left:-10px;
+    margin-right:-10px;
+  }
+  ion-list.manual-list-fullwidth div.list > .item, .list.card.manual-card-fullwidth > .item {
+    border-radius:0px;
+    border-left:0px;
+    border-right: 0px;
+  }
+  .show-list-numbers-and-dots ul{
+    list-style-type: disc;
+    padding-left:40px;
+  }
+  .show-list-numbers-and-dots ol{
+    list-style-type: decimal;
+    padding-left:40px;
+  }
+</style>
+
+<script src="js/app.js"></script>
+<script src="js/controllers.js"></script>
+<script src="js/routes.js"></script>
+
+<script src="js/directives.js"></script>
+<script src="js/services.js"></script>
+
+    <!-- Only required for Tab projects w/ pages in multiple tabs 
+    <script src="lib/ionicuirouter/ionicUIRouter.js"></script>
+  -->
+
+</head>
+<body ng-app="app" animation="slide-left-right-ios7">
+  <div>
+    <div>
+      <ion-nav-bar class="bar-stable">
+        <ion-nav-back-button></ion-nav-back-button>
+      </ion-nav-bar>
+      <ion-nav-view></ion-nav-view>
+      <ion-view title="Home" id="page1" style="background-color:#6D99D5;">
+  <ion-nav-buttons side="right" class="has-header">
+    <button class="button button-icon icon No Icon"> Login</button>
+  </ion-nav-buttons>
+  <ion-content padding="true" class="has-header">
+    <div>
+      <img src="img/show-me-logo.png" style="display: block; width: 100%; height: auto; margin-left: auto; margin-right: auto;">
+    </div>
+    <form id="home-form4" class="list">
+      <div class="spacer" style="width: 300px; height: 57px;"></div>
+      <label class="item item-input" id="home-input4">
+        <span class="input-label">Name</span>
+        <input type="text" placeholder="">
+      </label>
+      <label class="item item-input" id="home-input5">
+        <span class="input-label">Email</span>
+        <input type="email" placeholder="">
+      </label>
+      <label class="item item-input" id="home-input11">
+        <span class="input-label">Other Stuff</span>
+        <input type="text" placeholder="">
+      </label>
+    </form>
+    <button id="home-button2" class="button button-positive button-block">Save</button>
+  </ion-content>
+</ion-view>
+    </div>
+  </div>
+</body>
+</html>

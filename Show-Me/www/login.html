@@ -1,8 +1,6 @@
 <html>
 <head>
-	<title>Login</title>
-	<!-- <link rel="stylesheet" type="text/css" href="css/ionic.css"> -->
-	<link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/1.3.3/css/ionic.css">
+	<title>Login</title>	
 	<script type="text/javascript" src="js/jquery.js"></script>
 	<script type="text/javascript" src="js/index.js"></script>
 	<script type="text/javascript">
@@ -11,57 +9,114 @@
 		{
 			$("#loginButton").click(function(){
 				console.log("attaching login function.");
-				var email=$("#email").val();
-				var password=$("#password").val();
-				var dataString="email="+email+"&password="+password+"&login=";
-				if($.trim(email).length>0 & $.trim(password).length>0)
-				{
+				var username=$("#username").val();
+				var password=SHA512($("#password").val());
+				console.log("username: " +username);
+				console.log("password: " +password);
+				var dataString="username="+username+"&password="+password+"&login=";
+				if($.trim(username).length>0 & $.trim(password).length>0)
+				{					
+						$.ajax({
+							type: "POST",
+							url: (domainString + "/php/login.php"),
+							data: dataString,
+							crossDomain: true,
+							cache: false,
+							beforeSend: function(){ $("#loginButton").html('Connecting...');},
+							success: function(data){
+								//alert(data);
+								if(data=="success")
+								{
+									
+									localStorage.setItem("login", "true");
+									alert("Login succeeded!");
+									
+								}
+								else if(data.includes("failed"))
+								{
+									alert("Login error");
+									$("#login").html('Login');
+								}
+							}
+						}); // end $.ajax					
+				
 					$.ajax({
 						type: "POST",
-						url: (domainString + "/php/login.php"),
-						data: dataString,
+						url: (domainString + "/php/getSession.php"),
 						crossDomain: true,
 						cache: false,
-						beforeSend: function(){ $("#login").html('Connecting...');},
+						beforeSend: function(){ console.log("grabbing user session...");},
 						success: function(data){
-							alert(data);
-							if(data=="success")
+							//alert(data);
+							if(data.toString().includes("failed"))
 							{
-								localStorage.setItem("login", "true");
-								localStorage.setItem("email", "email");
-								window.location.href = "index.html";
+								alert("error grabbing session!");
 							}
-							else if(data="failed")
-							{
-								alert("Login error");
-								$("#login").html('Login');
+							else {
+								var session = JSON.parse(data);
+								//alert("session: " + session);
+								alert(`Welcome, back, ${session.firstname}.`);
+								sessionStorage.setItem("session", session);
+								console.log(session);
 							}
-						}
-					});
-				}
+							// alert("redirecting to user profile.");
+							// window.location.href = "profile.html";
+						} // end success function
+					}); //end 2nd ajax call
+				} // end if
+				// 	$.ajax({
+				// 		type: "POST",
+				// 		url: (domainString + "/php/getUsername.php"),
+				// 		crossDomain: true,
+				// 		cache: false,
+				// 		beforeSend: function(){ console.log("grabbing username...");},
+				// 		success: function(data){
+				// 			//alert(data);
+				// 			if(data!="failed")
+				// 			{
+				// 				localStorage.setItem("username", data);								
+				// 			}
+				// 			else if(data.includes("failed"))
+				// 			{
+				// 				console.log("Error grabbing Username.");								
+				// 			}
+				// 			else {
+				// 				alert("Unknown php error.");
+				// 			}
+				// 		}
+				// 	}); // end $.ajax
+				// }
+				// getUserID();
+				// getUsername();
+				// console.log("userID: ", localStorage.getItem("userID"));
+				// //alert("userID: "+localStorage.getItem("userID"));
+				// console.log("username: ", localStorage.getItem("username"));
+				//alert("username: "+localStorage.getItem("username"));
+				
 				return false;
-				//storeSession();
-			});			
-		});
+								
+			});	// end click function
+		}); // end document ready function		
 	</script>
 </head> <!-- Always Enter a Title! -->
 <body>	
 	<br/><br/>
 
-	<div class="list">
+	<section id="content" style="width: 90%;">
+	<center><form id="loginForm" class="list">
 		<input type="hidden" id="id" value=""/>			
-		<div class="item">
-			<label>Email</label>
-			<input type="email" id="email" value=""/>
+		<div class="item" style="width: 90%;">
+			<label>Username</label>
+			<input type="text" id="username" value="" style="width: 100%;" class="form-control" placeholder="Username" required />
 		</div>
-		<div class="item">
+		<div class="item" style="width: 90%;">
 			<label>Password</label>
-			<input type="password" id="password" placeholder="password" value=""/>
+			<input type="password" id="password" placeholder="Password" class="form-control" style="width: 100%;" value="" required />
 		</div>
-		<div class="item">
-			<input type="button" id="loginButton" class="button button-block" value="Login"/>
+		<div class="item" style="width: 90%">
+			<input type="submit" id="loginButton" class="button-style" class="form-control" value="Login"/>
 		</div>
-
-	</div>
+	</form></center>
+	</section>
 </body>
 </html>

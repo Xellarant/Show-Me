@@ -2,7 +2,7 @@
 
 <html>
 <head> <!-- Always Enter a Title! -->
-        <title>User Profile</title>
+        <title>User Profile</title>        
 
         <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
         <meta name="format-detection" content="telephone=no">
@@ -12,13 +12,32 @@
         <script type="text/javascript" src="js/jquery.js"></script>
         <!-- <script type="text/javascript" src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.js"></script> -->
         <script type="text/javascript" src="js/index.js"></script>
+        
         <script type="text/javascript">
-            // insert new JS here.
+            function updateUserName() {
+                if(localStorage.getItem("username") == null 
+                    || localStorage.getItem("username") == undefined)
+                {
+                    getUsername();
+                }
+                document.getElementById("username").innerHTML=localStorage.getItem("username");
+                //alert("#username text changed.");
+            }
+            
+            $(document).ready(function() {
+                //getSession();
+                //alert("localStorage.userID: "+localStorage.getItem("userID"));
+                updateUserName();
+            });
         </script>
     </head>
-    <body>                
+<body>                
         
-
+<div class="card">
+  <img id="userImage" style="width:100%">
+  <h1 id="username">User</h1>
+ <p><a href="favorites.html"><button class="button-style">Favorites</button></a></p>
+</div>
 
 
 </body>
