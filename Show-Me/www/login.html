@@ -27,9 +27,8 @@
 								//alert(data);
 								if(data=="success")
 								{
-									
-									localStorage.setItem("login", "true");
 									alert("Login succeeded!");
+									sessionStorage.setItem("login", "true");
 									
 								}
 								else if(data.includes("failed"))
@@ -60,7 +59,7 @@
 								console.log(session);
 							}
 							// alert("redirecting to user profile.");
-							// window.location.href = "profile.html";
+							window.location.href = "profile.html";
 						} // end success function
 					}); //end 2nd ajax call
 				} // end if
@@ -74,7 +73,7 @@
 				// 			//alert(data);
 				// 			if(data!="failed")
 				// 			{
-				// 				localStorage.setItem("username", data);								
+				// 				sessionStorage.setItem("username", data);								
 				// 			}
 				// 			else if(data.includes("failed"))
 				// 			{
@@ -88,10 +87,10 @@
 				// }
 				// getUserID();
 				// getUsername();
-				// console.log("userID: ", localStorage.getItem("userID"));
-				// //alert("userID: "+localStorage.getItem("userID"));
-				// console.log("username: ", localStorage.getItem("username"));
-				//alert("username: "+localStorage.getItem("username"));
+				// console.log("userID: ", sessionStorage.getItem("userID"));
+				// //alert("userID: "+sessionStorage.getItem("userID"));
+				// console.log("username: ", sessionStorage.getItem("username"));
+				//alert("username: "+sessionStorage.getItem("username"));
 				
 				return false;
 								

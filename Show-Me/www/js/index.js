@@ -47,6 +47,41 @@
 };
 
 function logCheck() { // also handles anchor checking
+
+    // get session.
+    $.ajax({
+        type: "POST",
+        url: (domainString + "/php/getSession.php"),
+        crossDomain: true,
+        cache: false,
+        beforeSend: function(){ console.log("grabbing user session...");},
+        success: function(data){
+            //alert(data);
+            var session = JSON.parse(data);
+            if(data.toString().includes("failed"))
+            {
+                alert("error grabbing session!");
+            }
+            else {                
+                //alert("session: " + session);                
+                sessionStorage.setItem("session", session);
+                console.log(session);
+            }
+            // alert("redirecting to user profile.");
+            if (sessionStorage.login && sessionStorage.getItem("login") == "true")
+            {                
+                document.getElementById("message").innerHTML=`<h1>Welcome Back, ${session.firstname}!</h1>`;
+                console.log(session);
+                // $("#login").remove();
+            }
+            else
+            {
+                document.getElementById("message").innerHTML="<h1>Please Login (or Sign Up)</h1>";
+                // $("#logout").remove();
+            }
+        } // end success function
+    }); // end get session ajax call.    
+
     $(".title").text(document.title);
     var title = document.title.toLowerCase();
                 // first change the links for login if they're already logged in.
@@ -69,7 +104,7 @@ function logCheck() { // also handles anchor checking
                     //         $(this).text("Home");
                     //     }
                     // }
-                    if (localStorage.login && localStorage.getItem("login") == "true" && $(this).attr("href") == "login.html") {
+                    if (sessionStorage.login && sessionStorage.getItem("login") == "true" && $(this).attr("href") == "login.html") {
                         // if the user is logged in, and we have tags that direct them to log in, flip them to log out.
                         $(this).attr("id", "logout");
                         $(this).attr("href", "#");
@@ -77,18 +112,9 @@ function logCheck() { // also handles anchor checking
                     }
                 });
                 // next change the header message for logins.
-                if (localStorage.login && localStorage.getItem("login") == "true")
-                {
-                    document.getElementById("message").innerHTML="<h1>Welcome Back!</h1>";
-                    // $("#login").remove();
-                }
-                else
-                {
-                    document.getElementById("message").innerHTML="<h1>Please Login (or Sign Up)</h1>";
-                    // $("#logout").remove();
-                }
+
                 $("#logout").click(function(){
-                    localStorage.setItem("login", "false");
+                    sessionStorage.setItem("login", "false");
                     window.location.href = "index.html";
                 });
     } // end logCheck
@@ -152,7 +178,7 @@ function logCheck() { // also handles anchor checking
 
         // Update document title dynamically and configure/change login messages/
         $(".title").text(document.title);
-        if (localStorage.login && localStorage.getItem("login") == "true")
+        if (sessionStorage.login && sessionStorage.getItem("login") == "true")
         {
             document.getElementById("message").innerHTML="<h1>Welcome Back!</h1>";
             //$("#login").remove();
@@ -164,7 +190,7 @@ function logCheck() { // also handles anchor checking
             //$("#logout").remove();
         }
         $("#logout").click(function(){
-            localStorage.setItem("login", "false");
+            sessionStorage.setItem("login", "false");
             window.location.href = "index.html";
         });
 
@@ -195,23 +221,31 @@ function getCookie(cname) {
     return "";
 }
 
-async function getSession() {    
-    var response;
-    $.ajaxSetup({cache: false});
-    function getData() {
-        $.get(domainString + "/php/getSession.php", function(data) {
-        sessionStorage.setItem("session", JSON.parse(data));
-        response = data;
+function getSession() {    
+    $.ajax({
+        type: "POST",
+        url: (domainString + "/php/getSession.php"),
+        crossDomain: true,
+        cache: false,
+        beforeSend: function(){ console.log("grabbing user session...");},
+        success: function(data){
+            //alert(data);
+            if(data.toString().includes("failed"))
+            {
+                alert("error grabbing session!");
+            }
+            else {
+                var session = JSON.parse(data);
+                //alert("session: " + session);
+                // alert(`Welcome, back, ${session.firstname}.`);
+                sessionStorage.setItem("session", session);
+                console.log(session);
+                return session;
+            }
+            // alert("redirecting to user profile.");
+            // window.location.href = "profile.html";
+        } // end success function
     });
-    }
-    getData();
-    return response;
-    //alert(session);
-
-    // localStorage.setItem("session", session);    
-    
-    // localStorage.setItem("session", session);
-    //return sessionStorage.getItem("session");
 } // end getSession
 
 function getUserID() {    
@@ -230,7 +264,7 @@ function getUserID() {
     }
     else {
         
-        localStorage.setItem("userID", userID);
+        sessionStorage.setItem("userID", userID);
     }    
 }
 
@@ -249,7 +283,7 @@ function getUsername() {
         console.log("error grabbing username!");
     }
     else {        
-        localStorage.setItem("username", userID);
+        sessionStorage.setItem("username", userID);
     }
 }
 

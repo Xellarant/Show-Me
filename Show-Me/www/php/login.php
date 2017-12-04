@@ -20,6 +20,15 @@ if(isset($_POST['login']))
 		$_SESSION['username'] = $username;		
 		$_SESSION['userID'] = $userID;
 
+		$stmt = $con->prepare("SELECT firstname, lastname, email from `userprofiles` where `userID`='$userID'");
+		$stmt->execute();
+		$stmt->bind_result($firstname, $lastname, $email);
+		$stmt->fetch();
+
+		$_SESSION['firstname'] = $firstname;
+		$_SESSION['lastname'] = $lastname;
+		$_SESSION['email'] = $email;
+
 		echo "success";
 	}
 	else

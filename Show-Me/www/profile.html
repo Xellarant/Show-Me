@@ -14,21 +14,48 @@
         <script type="text/javascript" src="js/index.js"></script>
         
         <script type="text/javascript">
-            function updateUserName() {
-                if(localStorage.getItem("username") == null 
-                    || localStorage.getItem("username") == undefined)
-                {
-                    getUsername();
-                }
-                document.getElementById("username").innerHTML=localStorage.getItem("username");
-                //alert("#username text changed.");
+            function updateUserName() {                
+
+                
             }
             
             $(document).ready(function() {
-                //getSession();
-                //alert("localStorage.userID: "+localStorage.getItem("userID"));
-                updateUserName();
-            });
+                
+                $.ajax({
+                    type: "POST",
+                    url: (domainString + "/php/getSession.php"),
+                    crossDomain: true,
+                    cache: false,
+                    beforeSend: function(){ console.log("grabbing user session...");},
+                    success: function(data){
+                        //alert(data);
+                        if(data.toString().includes("failed"))
+                        {
+                            alert("error grabbing session!");
+                        }
+                        else {
+                            var session = JSON.parse(data);
+                            //alert("session: " + session);
+                            // alert(`Welcome, back, ${session.firstname}.`);
+                            sessionStorage.setItem("session", session);
+                            console.log(session);
+                            document.getElementById("username").innerHTML=session.username;
+                            console.log(`username updated to ${session.username}.`);
+                            document.getElementById("firstname").innerHTML=session.firstname;
+                            console.log(`firstname updated to ${session.firstname}.`);
+                            document.getElementById("lastname").innerHTML=session.lastname;
+                            console.log(`lastname updated to ${session.lastname}.`);
+                            document.getElementById("email").innerHTML=session.email;
+                            console.log(`email updated to ${session.email}.`);
+                            //alert("#username text changed.");                        
+                        }
+                        // alert("redirecting to user profile.");
+                        // window.location.href = "profile.html";
+                    } // end success function
+                }); // end ajax.
+
+            
+            }); // end document.ready
         </script>
     </head>
 <body>                
@@ -36,6 +63,9 @@
 <div class="card">
   <img id="userImage" style="width:100%">
   <h1 id="username">User</h1>
+  <h2 id="firstname">Firstname</h2>
+  <h2 id="lastname">Lastname</h2>
+  <h2 id="email">Email</h2>
  <p><a href="favorites.html"><button class="button-style">Favorites</button></a></p>
 </div>
 
