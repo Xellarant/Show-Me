@@ -107,7 +107,8 @@
 					}
 				});
 
-			});
+			}); // end add click function
+
 			$("#remove").click(function(){
 				var id=$("#movieID").text();
 				var dataString="movieID="+movieID+"&remove=";
@@ -126,6 +127,7 @@
 						{
 							alert("Removed from favorites.");
 							$("#remove").val("Remove");
+							location.reload();
 						}
 						else if(data.toString().includes("error"))
 						{
@@ -134,14 +136,16 @@
 					}
 				});
 
-			});
-		});
+			}); // end remove click function.
+		}); // end document.ready (?)
+
 	</script>
 	</head>
 <body>
 	
 	<br/><br/>
-	<center>
+	<center>		        
+
 		<h1>Selected Movie:</h1>
 		<div id="selectedMovie" class="list" style="width: 40%;">
 			<input type="hidden" id="movieID" value=""/>
@@ -173,6 +177,11 @@
 				<input type="button" id="remove" class="button-style" value="Remove"/>
 			</div>
 		</div>
+
+		<br/><br/>
+        <a href="showme.html"><button class="button-style">Search Again</button></a><br/>
+        <br/>
+        
 	</center>
 
 	<br/><br/>
