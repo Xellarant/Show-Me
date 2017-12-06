@@ -8,7 +8,45 @@
 	<script type="text/javascript">
 		$(document).ready(function()
 		{
-			
+			// update list of established favorites
+
+			$.ajax({
+                    type: "GET",
+                    url: (domainString + "/php/getUserFavorites.php"),
+                    //data: dataString,
+                    crossDomain: true,
+                    cache: false,
+                    beforeSend: function(){ 
+                    	console.log("updating list of user favorites.");
+                    	//console.log("dataString: " + dataString);
+                	},
+                    success: function(data){
+                    	//alert(data);
+                        var result = JSON.parse(data);
+                        console.log("data: " + result);
+
+                        $.each(result, function(i, field){
+                        	/*
+							SELECT movieID, title, imageURL, actor, genre, director, titleYear, description FROM `user_favorites` join movies WHERE userid=$userID
+                        	*/
+                            var record = new Object();
+                            record.movieID=field.movieID;
+                            record.title=field.title;                            
+                            record.image_url=field.imageURL;
+                            record.actor=field.actor;
+                            record.genre=field.genre;
+                            record.director=field.director;
+                            record.year=field.titleYear;
+                            record.description=field.description;
+                            
+                            $("#listview").append("<a class='item' href='changeUserFavorites.html?movieID="+record.movieID+"&title="+record.title+"&year="+record.year+"&image_url="+record.image_url+"&genre="+record.genre+"&actor="+record.actor+"&director="+record.director+"'><span>Title: "+record.title+"</span><h2>Year: "+ record.year + " </h2><h2>Genre: "+record.genre+"</h2><img src='"+ record.image_url +"'/><br/><h2>"+record.description+"</h2>");
+                            // tableResults.push(record);
+                            // console.log(record + "pushed.");                    
+                            }); // end $.each                            
+                    } // end success
+                }); // end $.ajax
+
+			// end favorite movies list
 		});
 	</script>
 </head>
@@ -23,5 +61,11 @@
 			<a href = "profile.html"><input type="button" id="changeFavs" class="button button-block" value="View/Update My Profile"/></a>
 		</div>		
 	</div>
+
+	<center>
+		<h1>Favorites so Far: </h1>
+	<ul class="list" id="listview" style="width: 80%;"></ul>
+	</center>
+	
 </body>
 </html>

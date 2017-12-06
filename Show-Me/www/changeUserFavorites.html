@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+
+<html>
+<head> <!-- Always Enter a Title! -->
+        <title>Update User Favorites</title>        
+
+        <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"> -->
+        
+        <script type="text/javascript" src="js/jquery.js"></script>
+        <!-- <script type="text/javascript" src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.js"></script> -->
+        <script type="text/javascript" src="js/index.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+
+			// grab variables passed in URL
+			var movieID = decodeURI(getUrlVars()["movieID"]);
+			var title = decodeURI(getUrlVars()["title"]);
+			var year = decodeURI(getUrlVars()["year"]);
+			var image_url = decodeURI(getUrlVars()["image_url"]);
+			var genre = decodeURI(getUrlVars()["genre"]);
+			var actor = decodeURI(getUrlVars()["actor"]);
+			var director = decodeURI(getUrlVars()["director"]);
+			$("#movieID").text(movieID);
+			$("#title").text(title);
+			$("#year").text(year);
+			$("#image_url").attr("src", image_url);
+			$("#genre").text(genre);
+			$("#actor").text(actor);
+			$("#director").text(director);
+			// end variable grab
+
+			// update list of established favorites
+
+			$.ajax({
+                    type: "GET",
+                    url: (domainString + "/php/getUserFavorites.php"),
+                    //data: dataString,
+                    crossDomain: true,
+                    cache: false,
+                    beforeSend: function(){ 
+                    	console.log("updating list of user favorites.");
+                    	//console.log("dataString: " + dataString);
+                	},
+                    success: function(data){
+                    	//alert(data);
+                        var result = JSON.parse(data);
+                        console.log("data: " + result);
+
+                        $.each(result, function(i, field){
+                        	/*
+							SELECT movieID, title, imageURL, actor, genre, director, titleYear, description FROM `user_favorites` join movies WHERE userid=$userID
+                        	*/
+                            var record = new Object();
+                            record.movieID=field.movieID;
+                            record.title=field.title;                            
+                            record.image_url=field.imageURL;
+                            record.actor=field.actor;
+                            record.genre=field.genre;
+                            record.director=field.director;
+                            record.year=field.titleYear;
+                            record.description=field.description;
+                            
+                            $("#listview").append("<a class='item' href='changeUserFavorites.html?movieID="+record.movieID+"&title="+record.title+"&year="+record.year+"&image_url="+record.image_url+"&genre="+record.genre+"&actor="+record.actor+"&director="+record.director+"'><span>Title: "+record.title+"</span><h2>Year: "+ record.year + " </h2><h2>Genre: "+record.genre+"</h2><img src='"+ record.image_url +"'/><br/><h2>"+record.description+"</h2>");
+                            // tableResults.push(record);
+                            // console.log(record + "pushed.");                    
+                            }); // end $.each                            
+                    } // end success
+                }); // end $.ajax
+
+			// end favorite movies list
+
+			$("#add").click(function(){
+				var id=$("#movieID").text();
+				var title=$("#title").text();
+				var year=$("#year").text();
+				var image_url=$("#image_url").attr("src");
+				var genre=$("#genre").text();
+				var actor=$("#actor").text();
+				var director=$("#director").text();
+				var dataString="movieID="+movieID+"&title="+title+"&year="+year+"&image_url="+image_url+"&genre="+genre+"&actor="+actor+"&director="+director+"&add=";
+				$.ajax({
+					type: "POST",
+					url:(domainString + "/php/addFavorite.php"),
+					data: dataString,
+					crossDomain: true,
+					cache: false,
+					beforeSend: function(){ 
+						$("#add").val('Connecting...');
+						//alert(dataString);
+					},
+					success: function(data){
+						//alert(data);
+						if(data.toString().includes("success"))
+						{
+							alert("Added to Favorites.");
+							$("#add").val("Add");
+							location.reload();
+						}
+						else if(data.toString().includes("error"))
+						{
+							alert("error");
+						}
+					}
+				});
+
+			});
+			$("#remove").click(function(){
+				var id=$("#movieID").text();
+				var dataString="movieID="+movieID+"&remove=";
+				$.ajax({
+					type: "GET",
+					url: domainString + "/php/removeFavorite.php",
+					data: dataString,
+					crossDomain: true,
+					cache: false,
+					beforeSend: function(){ 
+						$("#remove").val('Connecting...');
+						//alert(dataString);
+					},
+					success: function(data){
+						if(data.toString().includes("success"))
+						{
+							alert("Removed from favorites.");
+							$("#remove").val("Remove");
+						}
+						else if(data.toString().includes("error"))
+						{
+							alert("error");
+						}
+					}
+				});
+
+			});
+		});
+	</script>
+	</head>
+<body>
+	
+	<br/><br/>
+	<center>
+		<h1>Selected Movie:</h1>
+		<div id="selectedMovie" class="list" style="width: 40%;">
+			<input type="hidden" id="movieID" value=""/>
+			<div class="item">
+				<label>Title: </label>
+				<h2 id="title"></h2>
+			</div>
+			<div class="item">
+				<label>Year: </label>
+				<h2 id="year"></h2>
+			</div>
+			<div class="item">
+				<img src="" id="image_url"/>
+			</div>
+			<div class="item">
+				<label>Genre: </label>
+				<h2 id="genre"></h2>
+			</div>
+			<div class="item">
+				<label>Actor: </label>
+				<h2 id="actor"></h2>
+			</div>
+			<div class="item">
+				<label>Director: </label>
+				<h2 id="director"></h2>
+			</div>
+			<div class="item">
+				<input type="button" id="add" class="button-style" value="Add"/><br/><br/>
+				<input type="button" id="remove" class="button-style" value="Remove"/>
+			</div>
+		</div>
+	</center>
+
+	<br/><br/>
+
+	<center>
+		<h1>Favorites so Far: </h1>
+	<ul class="list" id="listview" style="width: 80%;"></ul>
+	</center>
+
+</body>
+</html>
