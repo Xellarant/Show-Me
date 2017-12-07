@@ -65,6 +65,7 @@ function logCheck() { // also handles anchor checking
             else {                
                 //alert("session: " + session);                
                 sessionStorage.setItem("session", session);
+                sessionStorage.setItem("login", true);
                 console.log(session);
             }
             // alert("redirecting to user profile.");
@@ -84,40 +85,46 @@ function logCheck() { // also handles anchor checking
 
     $(".title").text(document.title);
     var title = document.title.toLowerCase();
-                // first change the links for login if they're already logged in.
-                $("a").each(function(i, field){ //go through each anchor tag to check if we need to change them.
-                    var currentHref = $(this).attr("href");
-                    var title = document.title.toLowerCase();
-                    // console.log("document title: " + title);
-                    // console.log("currentHref: " + currentHref);
-                    // console.log("href includes title? " + currentHref.includes(title));
-                    // if(currentHref.toString().includes(title))
-                    // {
-                    //     // if this IS the home page, and we found a link to home, just remove it.
-                    //     if (title.includes("home")) {
-                    //         $(this).remove();
-                    //     }
-                    //     // otherwise, change the link to this page to be a link to home.
-                    //     else if ($("#homeNav").length == 0) {
-                    //         console.log("replacing " + $(this).attr("href") + "with a link to home.");
-                    //         $(this).attr("href", "index.html");
-                    //         $(this).text("Home");
-                    //     }
-                    // }
-                    if (sessionStorage.login && sessionStorage.getItem("login") == "true" && $(this).attr("href") == "login.html") {
-                        // if the user is logged in, and we have tags that direct them to log in, flip them to log out.
-                        $(this).attr("id", "logout");
-                        $(this).attr("href", "#");
-                        $(this).text("Logout");
-                    }
-                });
-                // next change the header message for logins.
 
-                $("#logout").click(function(){
-                    sessionStorage.setItem("login", "false");
-                    window.location.href = "index.html";
-                });
+    checkLinks();
+                
     } // end logCheck
+
+    function checkLinks() {
+        // first change the links for login if they're already logged in.
+        $("a").each(function(i, field){ //go through each anchor tag to check if we need to change them.
+            var currentHref = $(this).attr("href");
+            var title = document.title.toLowerCase();
+            // console.log("document title: " + title);
+            // console.log("currentHref: " + currentHref);
+            // console.log("href includes title? " + currentHref.includes(title));
+            // if(currentHref.toString().includes(title))
+            // {
+            //     // if this IS the home page, and we found a link to home, just remove it.
+            //     if (title.includes("home")) {
+            //         $(this).remove();
+            //     }
+            //     // otherwise, change the link to this page to be a link to home.
+            //     else if ($("#homeNav").length == 0) {
+            //         console.log("replacing " + $(this).attr("href") + "with a link to home.");
+            //         $(this).attr("href", "index.html");
+            //         $(this).text("Home");
+            //     }
+            // }
+            if (sessionStorage.login && sessionStorage.getItem("login") == "true" && $(this).attr("href") == "login.html") {
+                // if the user is logged in, and we have tags that direct them to log in, flip them to log out.
+                $(this).attr("id", "logout");
+                $(this).attr("href", "#");
+                $(this).text("Logout");
+            }
+        });
+        // next change the message for logins.
+
+        $("#logout").click(function(){
+            sessionStorage.setItem("login", "false");
+            window.location.href = "index.html";
+        });
+    }
 
     /* Set the width of the side navigation to 250px */
     function openNav() {

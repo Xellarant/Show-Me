@@ -38,4 +38,5 @@ if(isset($_POST['login']))
 	echo mysqli_error($con);
 	$stmt->close();
 }
+echo mysqli_error($con);
 ?>

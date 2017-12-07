@@ -12,7 +12,7 @@ if(isset($_POST['add']))
 	$genre=$_POST['genre'];
 	$actor=$_POST['actor'];
 	$director=$_POST['director'];
-	$q=mysqli_query($con,"INSERT INTO `userFavorites` (`userID`, `movieID`,`title`, `titleYear`, `imageURL`, `genre`,`actor`, `director`) VALUES ('$userID', '$movieID', '$title', '$year', '$image_url', '$genre','$actor', '$director')");
+	$q=mysqli_query($con,"INSERT INTO `userfavorites` (`userID`, `movieID`,`title`, `titleYear`, `imageURL`, `genre`,`actor`, `director`) VALUES ('$userID', '$movieID', '$title', '$year', '$image_url', '$genre','$actor', '$director')");
 	if($q)
 		echo "success";
 	else

@@ -15,7 +15,8 @@
 				console.log("password: " +password);
 				var dataString="username="+username+"&password="+password+"&login=";
 				if($.trim(username).length>0 & $.trim(password).length>0)
-				{					
+				{
+					console.log("attempting ajax request.");
 						$.ajax({
 							type: "POST",
 							url: (domainString + "/php/login.php"),
@@ -24,8 +25,9 @@
 							cache: false,
 							beforeSend: function(){ $("#loginButton").html('Connecting...');},
 							success: function(data){
-								//alert(data);
-								if(data=="success")
+								console.log(data);
+								// alert("login response: " + data);
+								if(data.toString().includes("success"))
 								{
 									alert("Login succeeded!");
 									sessionStorage.setItem("login", "true");
@@ -58,7 +60,7 @@
 								sessionStorage.setItem("session", session);
 								console.log(session);
 							}
-							// alert("redirecting to user profile.");
+							//alert("redirecting to user profile.");
 							window.location.href = "profile.html";
 						} // end success function
 					}); //end 2nd ajax call

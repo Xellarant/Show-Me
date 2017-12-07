@@ -37,10 +37,8 @@
                             console.log(session);
                             document.getElementById("username").innerHTML=session.username;
                             console.log(`username updated to ${session.username}.`);
-                            document.getElementById("firstname").innerHTML=session.firstname;
-                            console.log(`firstname updated to ${session.firstname}.`);
-                            document.getElementById("lastname").innerHTML=session.lastname;
-                            console.log(`lastname updated to ${session.lastname}.`);
+                            document.getElementById("fullname").innerHTML=(session.firstname + " " + session.lastname);
+                            console.log(`full name updated to ${session.firstname} ${session.lastname}.`);                            
                             document.getElementById("email").innerHTML=session.email;
                             console.log(`email updated to ${session.email}.`);
                             //alert("#username text changed.");                        
@@ -50,6 +48,46 @@
                     } // end success function
                 }); // end ajax.
 
+                // update list of established favorites
+
+            $.ajax({
+                    type: "GET",
+                    url: (domainString + "/php/getUserFavorites.php"),
+                    //data: dataString,
+                    crossDomain: true,
+                    cache: false,
+                    beforeSend: function(){ 
+                        console.log("updating list of user favorites.");
+                        //console.log("dataString: " + dataString);
+                    },
+                    success: function(data){
+                        //alert(data);
+                        var result = JSON.parse(data);
+                        console.log("data: " + result);
+
+                        $.each(result, function(i, field){
+                            /*
+                            SELECT movieID, title, imageURL, actor, genre, director, titleYear, description FROM `user_favorites` join movies WHERE userid=$userID
+                            */
+                            var record = new Object();
+                            record.movieID=field.movieID;
+                            record.title=field.title;                            
+                            record.image_url=field.imageURL;
+                            record.actor=field.actor;
+                            record.genre=field.genre;
+                            record.director=field.director;
+                            record.year=field.titleYear;
+                            record.description=field.description;
+                            
+                            $("#listview").append("<a class='item' href='changeUserFavorites.html?movieID="+record.movieID+"&title="+record.title+"&year="+record.year+"&image_url="+record.image_url+"&genre="+record.genre+"&actor="+record.actor+"&director="+record.director+"'><span>Title: "+record.title+"</span><h2>Year: "+ record.year + " </h2><h2>Genre: "+record.genre+"</h2><img src='"+ record.image_url +"'/><br/><h2>"+record.description+"</h2>");
+                            // tableResults.push(record);
+                            // console.log(record + "pushed.");                    
+                            }); // end $.each                            
+                    } // end success
+                }); // end $.ajax
+
+            // end favorite movies list
+
             
             }); // end document.ready
         </script>
@@ -57,13 +95,31 @@
 <body>                
         
 <div class="card">
-  <img id="userImage" style="width:100%">
-  <h1 id="username">User</h1>
-  <h2 id="firstname">Firstname</h2>
-  <h2 id="lastname">Lastname</h2>
-  <h2 id="email">Email</h2>
+    <div class="item">
+        <img id="userImage" src="/images/show-me-logo-small.png" style="width:100%">
+    </div>
+    <div class="item">
+        <label>User: </label>
+        <h1 id="username">User</h1>
+    </div>
+    <div class="item">
+        <label>Name: </label>
+        <h2 id="fullname">Full Name</h2>
+        <!-- <h2 id="lastname">Lastname</h2> -->
+    </div>    
+    <div class="item">
+        <label>Email: </label>
+        <h2 id="email">Email</h2>
+    </div><br/>
  <p><a href="favorites.html"><button class="button-style">Favorites</button></a></p>
 </div>
+
+<center>
+    <br/>
+    <h1>Favorites so Far: </h1>
+    <br/>
+<ul class="list" id="listview" style="width: 80%;"></ul>
+</center>
 
 
 </body>

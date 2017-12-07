@@ -1,6 +1,6 @@
 <?php
 header("Access-Control-Allow-Origin: *");
- $con = mysqli_connect("localhost:3306","root","","babakari_movies") or die ("could not connect database");
+ $con = mysqli_connect("db.sandbox.xellarant.com:3306","Xellarant","techn0pathy","babakari_movies") or die ("could not connect database");
 
 $data=array();
 

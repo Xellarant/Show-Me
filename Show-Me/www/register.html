@@ -47,10 +47,10 @@
                                 sleep(5);
                                 alert("Thank you for Registering with us.");
                                 // sleep(5);                                
-                                localStorage.setItem("login", "true");
+                                sessionStorage.setItem("login", "true");
                                 if (session != null) {
-                                    localStorage.setItem("session.username", session.username);
-                                    localStorage.setItem("session", session);
+                                    sessionStorage.setItem("session.username", session.username);
+                                    sessionStorage.setItem("session", session);
                                 }
                                 window.location.replace(domainString + "/profile.html");
                             }
@@ -62,13 +62,13 @@
                             {
                                 alert("Something went wrong during registration. Do you have an account with us already?");
                             }
-                            session = getSession();
-                            if (session == null)
-                                session = localStorage.getItem("session");
-                            if(session != null)
-                                alert("Your userID is: " + session.userID);
-                            else
-                                alert("session is null!");
+                            // session = getSession();
+                            // if (session == null)
+                            //     session = sessionStorage.getItem("session");
+                            // if(session != null)
+                            //     alert("Your userID is: " + session.userID);
+                            // else
+                            //     alert("session is null!");
                             return false;
                         } // end success
                     }); // end $.ajax
@@ -109,7 +109,7 @@
                 <!-- <label>Repeat Password<br></label>
                     <input type="password" placeholder="Repeat Password" name="psw-repeat" required><br />
                     <input type="checkbox" checked="checked"> Remember me <br />                             -->
-                <input type="button" id="signup" class="button-style" value="Sign Up"/>                    
+                <input type="submit" id="signup" class="button-style" value="Sign Up"/>                    
                 
                 <div class="centered">
                     <a style="margin-bottom: 15px; margin-right: 45px; float: right; text-decoration: none;" href="login.html">Back to Login</a>
