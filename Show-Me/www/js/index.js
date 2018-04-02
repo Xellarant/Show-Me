@@ -154,7 +154,7 @@ function logCheck() { // also handles anchor checking
     }
 
     function mainNav() {
-          // contains the code for the navigation menu(s)
+           // contains the code for the navigation menu(s)
           var navHead = ''
           + '<!-- Use any element to open the sidenav -->'
           + '<!-- <span onclick="openNav()">Menu</span> -->'
@@ -164,9 +164,11 @@ function logCheck() { // also handles anchor checking
           var navTail = ''
           + '<div class="bar bar-header bar-positive" style="margin-bottom:80px;">'
           + '<h2><a id="homeNav" class="button button-clear" href="index.html">Home</a></h2>'
-          + '<h2><a id="signupNav" class="button button-clear" href="register.html">Register</a></h2>'
-          + '<h2><a class="button button-clear" href="favorites.html">Favorites</a></h2>'          
-          + '<h2><a class="button button-clear" href="chatbot.html">Show-Me Bot</a></h2>'
+          + '<h2><a id="signupNav" class="button button-clear" href="register.html">| Signup |</a></h2>'
+          + '<h2><a class="button button-clear" href="favorites.html">| Favorites |</a></h2>'
+          + '<h2><a class="button button-clear" href="chatbot.html">| Show-Me Bot |</a></h2>'
+          + '<h2><a class="button button-clear" href="directSearch.html">| Search |</a></h2>'
+          + '<h2><a class="button button-clear" href="showTime.html">| Show Time |</a></h2>'
           + '<!-- <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; menu</span> -->'
           + '<h1 class="title">Test Index Page</h1>'
           // + '<a id="logout" class="button button-clear" href="#">Logout</a>'
