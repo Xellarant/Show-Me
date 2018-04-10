@@ -17,12 +17,14 @@
             
             $(document).ready(function() {
                 
-                $.ajax({
+                $.ajax({ // grab session data and populate accordingly.
                     type: "POST",
                     url: (domainString + "/php/getSession.php"),
                     crossDomain: true,
                     cache: false,
-                    beforeSend: function(){ console.log("grabbing user session...");},
+                    beforeSend: function(){ 
+                        console.log("grabbing user session...");                        
+                    },
                     success: function(data){
                         //alert(data);
                         if(data.toString().includes("failed"))
@@ -33,7 +35,8 @@
                             var session = JSON.parse(data);
                             //alert("session: " + session);
                             // alert(`Welcome, back, ${session.firstname}.`);
-                            sessionStorage.setItem("session", session);
+                            Storage.set("session", session);
+                            console.log("session (from profile.html):");
                             console.log(session);
                             document.getElementById("username").innerHTML=session.username;
                             console.log(`username updated to ${session.username}.`);
@@ -41,15 +44,23 @@
                             console.log(`full name updated to ${session.firstname} ${session.lastname}.`);                            
                             document.getElementById("email").innerHTML=session.email;
                             console.log(`email updated to ${session.email}.`);
-                            //alert("#username text changed.");                        
-                        }
-                        // alert("redirecting to user profile.");
-                        // window.location.href = "profile.html";
+                            if (session.zipCode != null) {
+                                document.getElementById("zipCode").innerHTML = session.zipCode;
+                                console.log(`zipCode updated to ${session.zipCode}.`);
+                            }                            
+                            else if (session.zipCode == 0
+                                    || session.zipCode == null) {
+                                session.zipCode = window.prompt("Please enter your zipCode!");
+                                document.getElementById("zipCode").value = session.zipCode;
+                                Storage.set("session", session);
+                                console.log(`zipCode updated to ${session.zipCode}.`);
+                            }                                                        
+                            console.log(`userID: ${Storage.get("session").userID}`);
+                        }                        
                     } // end success function
                 }); // end ajax.
 
-                // update list of established favorites
-
+            // update list of established favorites
             $.ajax({
                     type: "GET",
                     url: (domainString + "/php/getUserFavorites.php"),
@@ -63,7 +74,7 @@
                     success: function(data){
                         //alert(data);
                         var result = JSON.parse(data);
-                        console.log("data: " + result);
+                        console.log(result);
 
                         $.each(result, function(i, field){
                             /*
@@ -85,11 +96,68 @@
                             }); // end $.each                            
                     } // end success
                 }); // end $.ajax
-
             // end favorite movies list
 
+            // set update button function
             
+
+            toggleDetails();
             }); // end document.ready
+
+        function toggleDetails() {
+                $("#profileDetails").toggle();
+            }
+        
+        function updateDetails(){
+                console.log("executing update function.");
+                alert("Executing update function.");
+                var zipCode=$("#zipCode").val();
+                var userID = Storage.get("session").userID;
+                
+                var dataString="zipCode="+zipCode+"&userID="+userID+"&update=";
+                alert(`dataString: ${dataString}`);
+                console.log(`dataString: ${dataString}`);
+                if($.trim(zipCode).length>0 && $.trim(userID).length>0)
+                {
+                    console.log("attempting ajax request.");
+                    alert("attempting ajax request.");
+                    $.ajax({
+                        type: "POST",
+                        url: (domainString + "/php/updateZipCode.php"),
+                        data: dataString,
+                        crossDomain: true,
+                        cache: false,
+                        beforeSend: function(){ 
+                            $("#update").html('Updating...');
+                            alert("attempting ajax request.");
+                        },
+                        success: function(data){
+                            console.log(data);
+                            alert("update response: " + data);
+                            if(data.toString().includes("success"))
+                            {
+                                alert("Update succeeded!");
+                                var session = Storage.get("session");
+                                session.zipCode = zipCode;
+                                Storage.set("session", session);
+                                console.log(`session.zipCode updated to ${Storage.get("session").zipCode}`);
+                                $("#Update").html('Update');
+                            }
+                            else if(data.includes("failed"))
+                            {
+                                alert("Update error");
+                                $("#Update").html('Update');
+                            }
+                        }
+                    }); // end $.ajax
+                } // end if
+                else 
+                {
+                  alert("Error. Either no Zip or no UserID found.");
+                }                                 
+                                
+            } // end click function
+
         </script>
     </head>
 <body>                
@@ -111,7 +179,29 @@
         <label>Email: </label>
         <h2 id="email">Email</h2>
     </div><br/>
- <p><a href="favorites.html"><button class="button-style">Favorites</button></a></p>
+    <p><a href="favorites.html"><button class="button-style">Favorites</button></a></p>
+    <p><button onClick="toggleDetails()" class="button-style1" width = "20%">Additional Details</button></p>
+    <div id="profileDetails">
+        <div class = item>
+            <form class="list">    
+            <div class = "item">
+                <label>ZipCode</label>
+                <input id="zipCode" type='text' placeholder="00000" width = "100%"></input>
+            </div>
+            <div class = "item">
+                <label>Favorite Actor</label>
+                <input id="favoriteActor" type='text' placeholder="John Wayne" width = "100%"></input>
+            </div>
+            <div class = "item">
+                <label>Favorite Director</label>
+                <input id="favoriteDirector" type='text' placeholder="Steven Spielberg" width = "100%"></input>
+            </div>
+            <div class = "item">
+                <input type='submit' onClick="updateDetails()" id="update" class="button-style" value="Update" width = "5%"></input>
+            </div>
+            <form>
+        </div>
+    </div>
 </div>
 
 <center>

@@ -82,6 +82,7 @@
 				var actor=$("#actor").text();
 				var director=$("#director").text();
 				var dataString="movieID="+movieID+"&title="+title+"&year="+year+"&image_url="+image_url+"&genre="+genre+"&actor="+actor+"&director="+director+"&add=";
+				alert(`dataString: ${dataString}`);
 				$.ajax({
 					type: "POST",
 					url:(domainString + "/php/addFavorite.php"),

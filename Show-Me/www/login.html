@@ -23,76 +23,50 @@
 							data: dataString,
 							crossDomain: true,
 							cache: false,
-							beforeSend: function(){ $("#loginButton").html('Connecting...');},
+							beforeSend: function(){ $("#loginButton").html('Connecting...');
+							// alert(dataString);
+						},
 							success: function(data){
 								console.log(data);
 								// alert("login response: " + data);
 								if(data.toString().includes("success"))
 								{
 									alert("Login succeeded!");
-									sessionStorage.setItem("login", "true");
+									Storage.set("login", "true");
 									
+									$.ajax({
+										type: "POST",
+										url: (domainString + "/php/getSession.php"),
+										crossDomain: true,
+										cache: false,
+										beforeSend: function(){ console.log("grabbing user session...");},
+										success: function(data){
+											//alert(data);							
+											if (data.toString().includes("success")) 
+											{
+												var session = JSON.parse(data);
+												//alert("session: " + session);
+												alert(`Welcome, back, ${session.firstname}.`);
+												sessionStorage.setItem("session", session);
+												console.log(session);
+											}
+											else if(data.toString().includes("failed"))
+											{
+												alert("error grabbing session!");
+											}
+											//alert("redirecting to user profile.");
+											window.location.href = "profile.html";
+										} // end success function
+									}); //end 2nd ajax call (getSession)
 								}
 								else if(data.includes("failed"))
 								{
 									alert("Login error");
 									$("#login").html('Login');
 								}
-							}
-						}); // end $.ajax					
-				
-					$.ajax({
-						type: "POST",
-						url: (domainString + "/php/getSession.php"),
-						crossDomain: true,
-						cache: false,
-						beforeSend: function(){ console.log("grabbing user session...");},
-						success: function(data){
-							//alert(data);
-							if(data.toString().includes("failed"))
-							{
-								alert("error grabbing session!");
-							}
-							else {
-								var session = JSON.parse(data);
-								//alert("session: " + session);
-								alert(`Welcome, back, ${session.firstname}.`);
-								sessionStorage.setItem("session", session);
-								console.log(session);
-							}
-							//alert("redirecting to user profile.");
-							window.location.href = "profile.html";
-						} // end success function
-					}); //end 2nd ajax call
-				} // end if
-				// 	$.ajax({
-				// 		type: "POST",
-				// 		url: (domainString + "/php/getUsername.php"),
-				// 		crossDomain: true,
-				// 		cache: false,
-				// 		beforeSend: function(){ console.log("grabbing username...");},
-				// 		success: function(data){
-				// 			//alert(data);
-				// 			if(data!="failed")
-				// 			{
-				// 				sessionStorage.setItem("username", data);								
-				// 			}
-				// 			else if(data.includes("failed"))
-				// 			{
-				// 				console.log("Error grabbing Username.");								
-				// 			}
-				// 			else {
-				// 				alert("Unknown php error.");
-				// 			}
-				// 		}
-				// 	}); // end $.ajax
-				// }
-				// getUserID();
-				// getUsername();
-				// console.log("userID: ", sessionStorage.getItem("userID"));
-				// //alert("userID: "+sessionStorage.getItem("userID"));
-				// console.log("username: ", sessionStorage.getItem("username"));
-				//alert("username: "+sessionStorage.getItem("username"));
+							} // end success
+						}); // end $.ajax										
+				} // end if (login paramater check)
 				
 				return false;
 								

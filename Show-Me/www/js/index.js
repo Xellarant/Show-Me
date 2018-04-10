@@ -18,7 +18,9 @@
  */
  var session = null;
  // domainString must be changed for app deployment!
- var domainString = "http://" + window.location.hostname;
+ var domainString = "http://" + window.location.hostname; 
+ // ^ nice for debugging as it tells you if/when you accidently run stuff from the wrong hose ^.^"
+ 
  var app = {
     // Application Constructor
     initialize: function() {
@@ -62,14 +64,13 @@ function logCheck() { // also handles anchor checking
             {
                 alert("error grabbing session!");
             }
-            else {                
-                //alert("session: " + session);                
-                sessionStorage.setItem("session", session);
+            else {                                
+                Storage.set("session", session);                
                 sessionStorage.setItem("login", true);
-                console.log(session);
+                console.log(`session (from index.js): ${JSON.stringify(session)}`);
             }
             // alert("redirecting to user profile.");
-            if (sessionStorage.login && sessionStorage.getItem("login") == "true")
+            if (Storage.get("login") == "true")
             {                
                 document.getElementById("message").innerHTML=`<h1>Welcome Back, ${session.firstname}!</h1>`;
                 console.log(session);
@@ -81,7 +82,7 @@ function logCheck() { // also handles anchor checking
                 // $("#logout").remove();
             }
         } // end success function
-    }); // end get session ajax call.    
+    }); // end get session ajax call.
 
     $(".title").text(document.title);
     var title = document.title.toLowerCase();
@@ -94,36 +95,33 @@ function logCheck() { // also handles anchor checking
         // first change the links for login if they're already logged in.
         $("a").each(function(i, field){ //go through each anchor tag to check if we need to change them.
             var currentHref = $(this).attr("href");
-            var title = document.title.toLowerCase();
-            // console.log("document title: " + title);
-            // console.log("currentHref: " + currentHref);
-            // console.log("href includes title? " + currentHref.includes(title));
-            // if(currentHref.toString().includes(title))
-            // {
-            //     // if this IS the home page, and we found a link to home, just remove it.
-            //     if (title.includes("home")) {
-            //         $(this).remove();
-            //     }
-            //     // otherwise, change the link to this page to be a link to home.
-            //     else if ($("#homeNav").length == 0) {
-            //         console.log("replacing " + $(this).attr("href") + "with a link to home.");
-            //         $(this).attr("href", "index.html");
-            //         $(this).text("Home");
-            //     }
-            // }
-            if (sessionStorage.login && sessionStorage.getItem("login") == "true" && $(this).attr("href") == "login.html") {
+            
+            if (Storage.get("login") == "true" && currentHref == "login.html") {
                 // if the user is logged in, and we have tags that direct them to log in, flip them to log out.
                 $(this).attr("id", "logout");
                 $(this).attr("href", "#");
                 $(this).text("Logout");
-            }
-        });
-        // next change the message for logins.
 
-        $("#logout").click(function(){
-            sessionStorage.setItem("login", "false");
-            window.location.href = "index.html";
-        });
+                // next change the function to actuallly destroy the session.
+
+                $(this).click(function(){
+                    Storage.set("login", "false");
+                    sessionStorage.clear();
+                    $.ajax({
+                      type: "POST",
+                      url: (domainString + "/php/destroySession.php"),
+                      crossDomain: true,
+                      cache: false,
+                      beforeSend: function(){ console.log("destroying user session...");},
+                      success: function(data){
+                          console.log(data);
+                          alert("session destroyed.");
+                          window.location.href = "index.html";
+                      } // end success function
+                  }); // end get session ajax call.                    
+                }); //end of logout click function.
+            } // end if
+        });        
     }
 
     /* Set the width of the side navigation to 250px */
@@ -162,7 +160,7 @@ function logCheck() { // also handles anchor checking
           + '<!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->'
           + '<div id="main"> </div>';
           var navTail = ''
-          + '<div class="bar bar-header bar-positive" style="margin-bottom:80px;">'
+          + '<div class="bar bar-header bar-dark" style="margin-bottom:80px;">'
           + '<h2><a id="homeNav" class="button button-clear" href="index.html">Home</a></h2>'
           + '<h2><a id="signupNav" class="button button-clear" href="register.html">| Signup |</a></h2>'
           + '<h2><a class="button button-clear" href="favorites.html">| Favorites |</a></h2>'
@@ -197,13 +195,9 @@ function logCheck() { // also handles anchor checking
         {
             document.getElementById("message").innerHTML="<h1>Please Login (or Sign Up)</h1>";
             //$("#logout").remove();
-        }
-        $("#logout").click(function(){
-            sessionStorage.setItem("login", "false");
-            window.location.href = "index.html";
-        });
+        }        
 
-            logCheck(); // defined outside of document.ready        
+        logCheck(); // defined outside of document.ready        
 
     }); // closes document.ready
 
@@ -247,7 +241,7 @@ function getSession() {
                 var session = JSON.parse(data);
                 //alert("session: " + session);
                 // alert(`Welcome, back, ${session.firstname}.`);
-                sessionStorage.setItem("session", session);
+                Storage.set("session", session);
                 console.log(session);
                 return session;
             }
@@ -257,44 +251,6 @@ function getSession() {
     });
 } // end getSession
 
-function getUserID() {    
-    var userID = null;
-    $.ajaxSetup({cache: false});
-    function getData() {
-        $.get(domainString + "/php/getUserID.php", function(data) {
-        userID = data;
-        console.log("getUserID returned: " +userID);
-        });
-    }
-    getData();
-    
-    if (userID == null) {
-        console.log("error grabbing user ID!");
-    }
-    else {
-        
-        sessionStorage.setItem("userID", userID);
-    }    
-}
-
-function getUsername() {    
-    var username = null;
-    $.ajaxSetup({cache: false});
-    function getData() {
-        $.get(domainString + "/php/getUsername.php", function(data) {
-        username = data;
-        console.log("getUsername returned: " +username);
-        });
-    }
-    getData();
-    
-    if (username == null) {
-        console.log("error grabbing username!");
-    }
-    else {        
-        sessionStorage.setItem("username", userID);
-    }
-}
 
 /*
 *  Secure Hash Algorithm (SHA512)
@@ -595,3 +551,26 @@ return false;
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+var Storage = {
+    get(name) {
+        var value = sessionStorage.getItem(name);
+
+        if(value === null) {
+            return undefined;
+        }
+        return JSON.parse(value);
+    },
+    set(name, value) {
+      if (name.includes("session.")) {
+        var propIndex = name.indexOf(".")+1;
+        var property = name.substring(propIndex, name.length);
+        var session = Storage.get("session");
+        session[property] = value;
+        Storage.set("session", session);
+      }
+      else {
+        sessionStorage[name] = JSON.stringify(value);
+      }
+    }
+};

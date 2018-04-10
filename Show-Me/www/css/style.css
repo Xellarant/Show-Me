@@ -1,5 +1,5 @@
 ﻿body {
-    background: #DCDDDF url(https://cssdeck.com/uploads/media/items/7/7AF2Qzt.png);
+    background: #DCDDDF;
     color: #000;
     font: 14px Arial;
     margin: 0 auto;
@@ -290,7 +290,7 @@ form input[type=text], input[type=password] {
     text-decoration: underline;
 }
 
-.button-style {
+.button-style { /* blue gradient button */
     background: rgb(254,231,154);
     background: -moz-linear-gradient(top, rgba(81,142,254,1) 0%, rgba(48,85,152,1) 100%);
     background: -webkit-linear-gradient(top, rgba(81,142,254,1) 0%,rgba(48,85,152,1) 100%);
@@ -309,6 +309,62 @@ form input[type=text], input[type=password] {
     -o-box-shadow: 0 1px 0 rgba(255,255,255,0.8) inset;
     box-shadow: 0 1px 0 rgba(255,255,255,0.8) inset;
     border: 1px solid #106c87;
+    color: #e7f0f3;
+    cursor: pointer;
+    float: inherit;
+    font: bold 15px Helvetica, Arial, sans-serif;
+    height: 35px;
+    margin: auto;
+    position: relative;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+    width: 75%;    
+  }
+
+.button-style1 { /* green gradient button */
+    background: rgb(180,221,180); /* Old browsers */
+    background: -moz-linear-gradient(top, rgb(180,221,180) 0%, rgb(131,199,131) 17%, rgb(82,177,82) 33%, rgb(0,138,0) 67%, rgb(0,87,0) 83%, rgb(0,36,0) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgb(180,221,180) 0%,rgb(131,199,131) 17%,rgb(82,177,82) 33%,rgb(0,138,0) 67%,rgb(0,87,0) 83%,rgb(0,36,0) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgb(180,221,180) 0%,rgb(131,199,131) 17%,rgb(82,177,82) 33%,rgb(0,138,0) 67%,rgb(0,87,0) 83%,rgb(0,36,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b4ddb4', endColorstr='#002400',GradientType=0 ); /* IE6-9 */
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    -ms-border-radius: 30px;
+    -o-border-radius: 30px;
+    border-radius: 30px;
+    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,0.8) inset;
+    -moz-box-shadow: 0 1px 0 rgba(255,255,255,0.8) inset;
+    -ms-box-shadow: 0 1px 0 rgba(255,255,255,0.8) inset;
+    -o-box-shadow: 0 1px 0 rgba(255,255,255,0.8) inset;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.8) inset;
+    border: 1px solid #007300;
+    color: #e7f0f3;
+    cursor: pointer;
+    float: inherit;
+    font: bold 15px Helvetica, Arial, sans-serif;
+    height: 35px;
+    margin: auto;
+    position: relative;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+    width: 75%;    
+  }
+
+.button-style2 { /* red gradient button */
+    background: rgb(179,3,44); /* Old browsers */
+    background: -moz-linear-gradient(top, rgb(179,3,44) 0%, rgb(154,2,38) 57%, rgb(122,0,28) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgb(179,3,44) 0%,rgb(154,2,38) 57%,rgb(122,0,28) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgb(179,3,44) 0%,rgb(154,2,38) 57%,rgb(122,0,28) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3032c', endColorstr='#7a001c',GradientType=0 ); /* IE6-9 */
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    -ms-border-radius: 30px;
+    -o-border-radius: 30px;
+    border-radius: 30px;
+    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,0.8) inset;
+    -moz-box-shadow: 0 1px 0 rgba(255,255,255,0.8) inset;
+    -ms-box-shadow: 0 1px 0 rgba(255,255,255,0.8) inset;
+    -o-box-shadow: 0 1px 0 rgba(255,255,255,0.8) inset;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.8) inset;
+    border: 1px solid #7F0000;
     color: #e7f0f3;
     cursor: pointer;
     float: inherit;
@@ -342,8 +398,7 @@ form input[type=text], input[type=password] {
     padding: 15px 0;
 }
 
-.button a {
-    background: url(https://cssdeck.com/uploads/media/items/8/8bcLQqF.png) 0 -112px no-repeat;
+.button a {   
     color: #7E7E7E;
     font-size: 17px;
     padding: 2px 0 2px 40px;
