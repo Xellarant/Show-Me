@@ -66,7 +66,7 @@ function logCheck() { // also handles anchor checking
             }
             else {                                
                 Storage.set("session", session);                
-                sessionStorage.setItem("login", true);
+                Storage.set("login", true);
                 console.log(`session (from index.js): ${JSON.stringify(session)}`);
             }
             // alert("redirecting to user profile.");
@@ -82,12 +82,12 @@ function logCheck() { // also handles anchor checking
                 // $("#logout").remove();
             }
         } // end success function
-    }); // end get session ajax call.
+      }); // end get session ajax call.
 
-    $(".title").text(document.title);
-    var title = document.title.toLowerCase();
+      $(".title").text(document.title);
+      var title = document.title.toLowerCase();
 
-    checkLinks();
+      checkLinks();
                 
     } // end logCheck
 
@@ -95,12 +95,17 @@ function logCheck() { // also handles anchor checking
         // first change the links for login if they're already logged in.
         $("a").each(function(i, field){ //go through each anchor tag to check if we need to change them.
             var currentHref = $(this).attr("href");
+            var isLogged = Storage.get("login");
+
+            // console.log("Checking links in navbar.");
+            // console.log(`sessionStorage["login"] = ${isLogged}\ncurrentHref = ${currentHref}`);
             
-            if (Storage.get("login") == "true" && currentHref == "login.html") {
+            if (isLogged == true && currentHref == "login.html") {
                 // if the user is logged in, and we have tags that direct them to log in, flip them to log out.
                 $(this).attr("id", "logout");
                 $(this).attr("href", "#");
                 $(this).text("Logout");
+                console.log("login changed to logout.");
 
                 // next change the function to actuallly destroy the session.
 
@@ -115,12 +120,16 @@ function logCheck() { // also handles anchor checking
                       beforeSend: function(){ console.log("destroying user session...");},
                       success: function(data){
                           console.log(data);
-                          alert("session destroyed.");
+                          alert("Sorry to see you go! You have been logged out.");
                           window.location.href = "index.html";
                       } // end success function
                   }); // end get session ajax call.                    
                 }); //end of logout click function.
             } // end if
+
+            if (isLogged == true && currentHref == "register.html") {
+              $(this).remove();
+            }
         });        
     }
 
@@ -183,9 +192,11 @@ function logCheck() { // also handles anchor checking
         mainNav();
         headerFiles();
 
+        logCheck(); // defined outside of document.ready   
+
         // Update document title dynamically and configure/change login messages/
         $(".title").text(document.title);
-        if (sessionStorage.login && sessionStorage.getItem("login") == "true")
+        if (Storage.get("login") == "true")
         {
             document.getElementById("message").innerHTML="<h1>Welcome Back!</h1>";
             //$("#login").remove();
@@ -195,9 +206,7 @@ function logCheck() { // also handles anchor checking
         {
             document.getElementById("message").innerHTML="<h1>Please Login (or Sign Up)</h1>";
             //$("#logout").remove();
-        }        
-
-        logCheck(); // defined outside of document.ready        
+        }                     
 
     }); // closes document.ready
 

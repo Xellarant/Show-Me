@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        
+        <link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/1.3.3/css/ionic.css">
+            <script type="text/javascript" src="js/jquery.js"></script>
+            <!-- <script type="text/javascript" src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.js"></script> -->
+            <script type="text/javascript" src="js/index.js"></script>
+            <title>Show Time</title>
+            <script type="text/javascript"></script>
+            
+            <script type="text/javascript">
+                $(document).ready(function(){
+                            
+                    $.ajax({ // grab session data and populate accordingly.
+                    type: "POST",
+                    url: (domainString + "/php/getSession.php"),
+                    crossDomain: true,
+                    cache: false,
+                    beforeSend: function(){ 
+                        console.log("grabbing user session...");                        
+                    },
+                    success: function(data){
+                        //alert(data);
+                        if(data.toString().includes("failed"))
+                        {
+                            alert("error grabbing session!");
+                        }
+                        else {
+                            var session = JSON.parse(data);
+                            //alert("session: " + session);
+                            // alert(`Welcome, back, ${session.firstname}.`);
+                            Storage.set("session", session);
+                            console.log("session (from profile.html):");
+                            console.log(session);
+                            
+                            // check for user's zip code
+                            if (session.zipCode != null) {
+                                document.getElementById("zipCode").value = session.zipCode;
+                                console.log(`zipCode updated to ${session.zipCode}.`);
+                            }                            
+                            else if (session.zipCode == 0
+                                    || session.zipCode == null) {
+                                session.zipCode = window.prompt("Please enter your zipCode!");
+                                document.getElementById("zipCode").value = session.zipCode;
+                                Storage.set("session", session);
+                                console.log(`zipCode updated to ${session.zipCode}.`);
+                            }                                                        
+                            console.log(`userID: ${Storage.get("session").userID}`);
+
+                            document.getElementById("formHeader").innerHTML = `Showtimes Near Me (${Storage.get("session").zipCode})`;
+
+                        }                        
+                    } // end success function
+                }); // end ajax.
+
+                          $("#submit").click(function() {
+                                             console.log("form submission detected.");
+                                             var yearStart=$("#yearStart").val();
+                                             var yearEnd=$("#yearStart").val();
+                                             var movieTitle=$("#movieTitle").val();
+                                             var movieRate=$("#movieRate").val();
+                                             var movieActor=$("#movieActor").val();
+                                             var movieGenre=$("#movieGenre").val();
+                                             var zipCode=$("#zipCode").val();
+                                             document.getElementById("formHeader").innerHTML = `Showtimes Near Me (${zipCode})`;
+                                             // if (zipCode == ""){
+                                             //     alert("Zip code must be filled out");
+                                             //     return false;
+                                             // }
+                                             var dataString="&yearStart="+yearStart+"&yearEnd="+yearEnd+"&movieTitle="+movieTitle+"&movieRate="+movieRate+"&movieActor="+movieActor+"&movieGenre="+movieGenre;
+                                             //if($.trim(movieTitle).length>0
+                                             //   || $.trim(movieDirector).length>0
+                                             //   || $.trim(movieActor).length>0
+                                             //   || $.trim(movieGenre).length>0
+                                             //   )
+                                             //{
+                                             //alert("Searching for matches.");
+                                             $("#listview").append("<h3>Searching ...</h3>");
+                                             $.ajax({
+                                                    type: "GET",
+                                                    url: (domainString + "/php/showTime.php"),
+                                                    data: dataString,
+                                                    crossDomain: true,
+                                                    cache: false,
+                                                    beforeSend: function(){ $("#submit").html('Connecting...');},
+                                                    success: function(data){
+                                                    console.log("dataString: " + dataString);
+                                                    console.log("data: " + data);
+                                                    var result = JSON.parse(data);
+                                                    if (result == null)
+                                                        document.getElementById("listview").innerHTML = "No result";
+                                                    else{
+                                                    document.getElementById("listview").innerHTML = "";
+                                                    $.each(result, function(i, field){
+                                                           var record = new Object();
+                                                           record.title=field.title;
+                                                           record.year=field.year;
+                                                           record.image_url=field.image;
+                                                           record.rating=field.imdb_rating;
+                                                           record.runtime=field.runtime;
+                                                           record.imdb_rating=field.imdb_rating;
+                                                           record.description=field.description;
+                                                           record.genre=field.genres;
+                                                           record.actors=field.stars;
+                                                           record.directors = field.directors;
+                                                           record.link = field.id;
+                                                           
+                                                           $("#listview").append("<div style=' border: dotted; margin: 15 15 15 15; width:320px;height:auto;'>"+"<h3>Title: "+record.title+"</h3><p>Year: "+ record.year + " | Genre: "+record.genre+" | Rate: "+record.rating +"<p><img src='"+ record.image_url +"' style='width:120px;height:160px;'><br/><a href='http://www.imdb.com/showtimes/title/tt"+record.link+"/US/"+$("#zipCode").val()+"?ref_=sh_ov_tt' target='_blank'>Show Time!!</a><br><a href='changeUserFavorites.html?movieID="+record.link+"&title="+record.title+"&year="+record.year+"&image_url="+record.image_url+"&genre="+record.genre+"&actor="+record.actors+"&director="+record.directors+"' target='_blank'>Add to my Favorites!!</a><br><p>"+record.description+"</p></div>");
+                                                           }); // end $.each
+                                                    }
+                                                    } // end success
+                                                    }); // end $.ajax
+                                             
+                                             $("#submit").html('Submit');
+                                             toggleSearch();
+                                             //}
+                                             return false;
+                                             //storeSession();
+                                             }); // end submit onclick()
+                          }); //end $(document).ready()
+                          function toggleSearch() {
+                              $("#searchForm").toggle();
+                          }
+            </script>
+
+            </head>
+<body>
+<div class="container">
+        <section id="content">
+            <h3 id="formHeader">Show Time Near Me</h3>
+            <form id="searchForm" class="centered" method="GET" action="http://sandbox.xellarant.com/php/showTime.php">
+                
+
+                <div>
+                	<label>Title<br></label>
+                    <input id="movieTitle" type="text" placeholder="Title"  name="movieTitle" >
+                </div>
+                <div>
+                	<label>Release Date<br></label>
+                    <input id="yearStart" type="text" placeholder="Release Date"  name="yearStart" >
+                </div>
+                <div>
+                    <label>Rate more than :<br></label>
+                    <input id="movieRate" type="text" placeholder="Rate" name="movieRate" >
+                </div>
+                <br>
+                <div>
+                    <label>zip code : </label>
+                    <input id="zipCode" type="text" placeholder="Zip Code"  name="zipCode" >
+                        </div>
+                
+                <br>
+                <div >
+                    <label>Genre : </label>
+                    <select id="movieGenre" name="movieGenre">
+                        <option value="">All</option>
+                        <option value="Action">Action</option>
+                        <option value="Adventure">Adventure</option>
+                        <option value="Animation">Animation</option>
+                        <option value="Biography">Biography</option>
+                        <option value="Comedy">Comedy</option>
+                        <option value="Crime">Crime</option>
+                        <option value="Documentary">Documentary</option>
+                        <option value="Drama">Drama</option>
+                        <option value="Family">Family</option>
+                        <option value="Fantasy">Fantasy</option>
+                        <option value="Film-Noir">Film-Noir</option>
+                        <option value="Game-Show">Game-Show</option>
+                        <option value="History">History</option>
+                        <option value="Horror">Horror</option>
+                        <option value="Music">Music</option>
+                        <option value="Musical">Musical</option>
+                        <option value="Mystery">Mystery</option>
+                        <option value="News">News</option>
+                        <option value="Reality-TV">Reality-TV</option>
+                        <option value="Romance">Romance</option>
+                        <option value="Sci-Fi">Sci-Fi</option>
+                        <option value="Sport">Sport</option>
+                        <option value="Thriller">Thriller</option>
+                        <option value="War">War</option>
+                        <option value="Western">Western</option>
+                        
+                    </select>
+                </div>
+
+                <br>
+                    <input id="submit" type="submit" class="button-style" style="margin-bottom: 10px;" value="Submit">
+
+            </form><!-- form -->
+        </section><!-- content -->
+</div><!-- container -->
+
+    <center>
+        <ul class="list" id="listview" ></ul>
+    </center>
+
+</body>
+</html>

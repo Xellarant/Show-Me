@@ -45,7 +45,7 @@
                             document.getElementById("email").innerHTML=session.email;
                             console.log(`email updated to ${session.email}.`);
                             if (session.zipCode != null) {
-                                document.getElementById("zipCode").innerHTML = session.zipCode;
+                                document.getElementById("zipCode").value = session.zipCode;
                                 console.log(`zipCode updated to ${session.zipCode}.`);
                             }                            
                             else if (session.zipCode == 0
@@ -120,7 +120,7 @@
                 if($.trim(zipCode).length>0 && $.trim(userID).length>0)
                 {
                     console.log("attempting ajax request.");
-                    alert("attempting ajax request.");
+                    //alert("attempting ajax request.");
                     $.ajax({
                         type: "POST",
                         url: (domainString + "/php/updateZipCode.php"),
@@ -129,11 +129,11 @@
                         cache: false,
                         beforeSend: function(){ 
                             $("#update").html('Updating...');
-                            alert("attempting ajax request.");
+                            //alert("inside ajax request.");
                         },
                         success: function(data){
                             console.log(data);
-                            alert("update response: " + data);
+                            //alert("update response: " + data);
                             if(data.toString().includes("success"))
                             {
                                 alert("Update succeeded!");

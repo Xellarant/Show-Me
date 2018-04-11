@@ -41,8 +41,8 @@
                             
                             $("#listview").append("<a class='item' href='changeUserFavorites.html?movieID="+record.movieID+"&title="+record.title+"&year="+record.year+"&image_url="+record.image_url+"&genre="+record.genre+"&actor="+record.actor+"&director="+record.director+"'><span>Title: "+record.title+"</span><h2>Year: "+ record.year + " </h2><h2>Genre: "+record.genre+"</h2><img src='"+ record.image_url +"'/><br/><h2>"+record.description+"</h2>");
                             // tableResults.push(record);
-                            // console.log(record + "pushed.");                    
-                            }); // end $.each                            
+                            // console.log(record + "pushed.");
+                            }); // end $.each
                     } // end success
                 }); // end $.ajax
 

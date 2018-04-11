@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Showtimes</title>
+      <script>
+         
+         // construct the url with parameter values
+         var apikey = "6dzcfymm2qydesmqzqyhdj76";
+         var baseUrl = "http://data.tmsapi.com/v1.1";
+         var showtimesUrl = baseUrl + '/movies/showings';
+         var zipCode = "91367"; // overwritten later with that of the session.
+         var d = new Date();
+         var today = d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
+         
+         $(document).ready(function() {
+
+         	$.ajax({ // grab session data and populate accordingly.
+                type: "POST",
+                url: (domainString + "/php/getSession.php"),
+                crossDomain: true,
+                cache: false,
+                beforeSend: function(){ 
+                    console.log("grabbing user session...");                        
+                },
+                success: function(data){
+                    //alert(data);
+                    if(data.toString().includes("failed"))
+                    {
+                        alert("error grabbing session!");
+                    }
+                    else {
+                        var session = JSON.parse(data);
+
+                        Storage.set("session", session);
+                        console.log("fetched session (from showtimes.html):");
+                        console.log(session);
+                                                
+                        if (session.zipCode == 0
+                                || session.zipCode == null) {
+                            session.zipCode = window.prompt("Please enter your zipCode!");
+                            document.getElementById("zipCode").value = session.zipCode;
+                            Storage.set("session", session);
+                            console.log(`zipCode in session updated to ${session.zipCode}.`);
+                            zipCode = session.zipCode;
+                        }                                                        
+                        console.log(`userID: ${Storage.get("session").userID}`);
+                    }                        
+                } // end success function
+            }); // end ajax.
+         
+           // send off the query for showtimes.
+           $.ajax({
+         	url: showtimesUrl,
+                data: {	startDate: today,
+         	        zip: zipCode,
+         	        jsonp: "dataHandler",
+         	        api_key: apikey
+                   },			
+         	dataType: "jsonp",
+           });
+         });
+         
+         // callback to handle the results
+         function dataHandler(data) {
+          $(document.body).append('<p>Found ' + data.length + ' movies showing within 5 miles of ' + zipCode+':</p>');
+          var movies = data.hits;
+          $.each(data, function(index, movie) {
+         	var movieData = '<div class="tile"><img src="http://developer.tmsimg.com/' + movie.preferredImage.uri + '?api_key='+apikey+'"><br/>';
+         	movieData += movie.title;
+         	if (movie.ratings) { movieData += ' (' + movie.ratings[0].code + ') </div>' };
+         	$(document.body).append(movieData);
+          console.log(movie);
+
+          /*
+          Gracenote Example:
+            Object
+                advisories
+                :
+                ["Adult Situations"]
+                animation
+                :
+                "Animated"
+                descriptionLang
+                :
+                "en"
+                directors
+                :
+                ["Wes Anderson"]
+                entityType
+                :
+                "Movie"
+                genres
+                :
+                (3) ["Animated", "Comedy", "Adventure"]
+                longDescription
+                :
+                "When, by executive decree, all the canine pets of Megasaki City are exiled to a vast garbage-dump called Trash Island, 12-year-old Atari sets off alone in a miniature Junior-Turbo Prop and flies across the river in search of his bodyguard-dog, Spots. There, with the assistance of a pack of newly-found mongrel friends, he begins an epic journey that will decide the fate and future of the entire Prefecture."
+                officialUrl
+                :
+                "http://www.isleofdogsmovie.com/"
+                preferredImage
+                :
+                {width: "240", height: "360", uri: "assets/p14551155_v_v5_aa.jpg", category: "VOD Art", text: "yes", …}
+                qualityRating
+                :
+                {ratingsBody: "TMS", value: "3.5"}
+                ratings
+                :
+                [{…}]
+                releaseDate
+                :
+                "2018-02-15"
+                releaseYear
+                :
+                2018
+                rootId
+                :
+                "14551155"
+                runTime
+                :
+                "PT01H41M"
+                shortDescription
+                :
+                "Banished dogs try to help a 12-year-old boy find his beloved pet on an island that's a garbage dump."
+                showtimes
+                :
+                (9) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+                subType
+                :
+                "Feature Film"
+                title
+                :
+                "Isle of Dogs"
+                titleLang
+                :
+                "en"
+                tmsId
+                :
+                "MV010376380000"
+                topCast
+                :
+                (3) ["Bryan Cranston", "Edward Norton", "Scarlett Johansson"]
+                __proto__
+                :
+                Object
+
+
+            tmdb example:
+                https://api.themoviedb.org/3/discover/movie?primary_release_date.gte=2018-02-15&primary_release_date.lte=2018-04-12&api_key=e945ada112a9c51dd4bd56452b468c93
+
+                if poster path is shown as \/30oXQKwibh0uANGMs0Sytw3uN22.jpg
+                full URL is https://image.tmdb.org/t/p/w500/30oXQKwibh0uANGMs0Sytw3uN22.jpg.
+
+            */
+
+          $("#listview").append("<a class='item' href='changeUserFavorites.html?movieID="+movie.id+"&title="+record.title+"&year="+record.year+"&image_url="+record.image_url+"&genre="+record.genre+"&actor="+record.actors+"&director="+record.directors+"'><span>Title: "+record.title+"</span><h2>Year: "+ record.year + " </h2><h2>Genre: "+record.genre+"</h2><img src='"+ record.image_url +"'/><br/><h2>"+record.description+"</h2>");
+                                                          
+          }); // end .each
+         } // end dataHandler
+           
+      </script>
+   </head>
+   <body>
+    <div class="container" style="width: 80%">
+        <ul class="list" id="listview">
+        </ul>
+    </div>
+   </body>
+</html>
+</code>
